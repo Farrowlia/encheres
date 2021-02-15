@@ -4,13 +4,23 @@ public class Retrait {
 	
 	
 	private String rue;
-	private String code_postal;
+	private String codePostal;
 	private String ville;
 	private ArticleVendu articleVendu;
 	
 	
 	public Retrait() {
 	}
+	public Retrait(ArticleVendu articleVendu) {
+		this.articleVendu = articleVendu;
+	}
+	public Retrait(String rue, String codePostal, String ville, ArticleVendu articleVendu) {
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.articleVendu = articleVendu;
+	}
+
 
 
 	public String getRue() {
@@ -21,11 +31,11 @@ public class Retrait {
 	}
 
 
-	public String getCode_postal() {
-		return code_postal;
+	public String getCodePostal() {
+		return codePostal;
 	}
-	public void setCode_postal(String code_postal) {
-		this.code_postal = code_postal;
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
 	}
 
 

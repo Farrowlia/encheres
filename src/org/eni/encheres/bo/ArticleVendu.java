@@ -12,13 +12,16 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private String etatVente; // peut prendre 4 valeurs (en_cours, en_vente, annule, vendu)
+	private String etatVente; // peut prendre 4 valeurs différentes (en_cours, en_vente, annule, vendu)
 	private List<String> imageUrl;
 	private Utilisateur utilisateur;
 	private Categorie categorie;
 	
 	
 	public ArticleVendu() {
+	}
+	public ArticleVendu(int noArticle) {
+		this.noArticle = noArticle;
 	}
 
 
