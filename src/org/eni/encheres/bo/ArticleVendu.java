@@ -10,13 +10,12 @@ public class ArticleVendu {
 	private String description;
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
-	private int miseAPrix;
+	private int prixInitial;
 	private int prixVente;
-	private boolean etatVente;
+	private String etatVente; // peut prendre 4 valeurs (en_cours, en_vente, annule, vendu)
 	private List<String> imageUrl;
 	private Utilisateur utilisateur;
 	private Categorie categorie;
-	private Retrait retrait;
 	
 	
 	public ArticleVendu() {
@@ -63,11 +62,11 @@ public class ArticleVendu {
 	}
 
 
-	public int getMiseAPrix() {
-		return miseAPrix;
+	public int getPrixInitial() {
+		return prixInitial;
 	}
-	public void setMiseAPrix(int miseAPrix) {
-		this.miseAPrix = miseAPrix;
+	public void setPrixInitial(int prixInitial) {
+		this.prixInitial = prixInitial;
 	}
 
 
@@ -79,10 +78,10 @@ public class ArticleVendu {
 	}
 
 
-	public boolean getEtatVente() {
+	public String getEtatVente() {
 		return etatVente;
 	}
-	public void setEtatVente(boolean etatVente) {
+	public void setEtatVente(String etatVente) {
 		this.etatVente = etatVente;
 	}
 
@@ -108,14 +107,6 @@ public class ArticleVendu {
 	}
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
-	}
-
-
-	public Retrait getRetrait() {
-		return retrait;
-	}
-	public void setRetrait(Retrait retrait) {
-		this.retrait = retrait;
 	}
 
 }
