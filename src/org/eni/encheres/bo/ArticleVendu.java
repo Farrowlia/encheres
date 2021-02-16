@@ -12,7 +12,7 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private String etatVente; // peut prendre 4 valeurs différentes (en_cours, en_vente, annule, vendu)
+	private String etatVente; // peut prendre 4 valeurs différentes (en_attente, en_vente, annule, vendu)
 	private List<String> imageUrl;
 	private Utilisateur utilisateur;
 	private Categorie categorie;
