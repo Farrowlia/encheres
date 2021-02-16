@@ -1,5 +1,18 @@
 package org.eni.encheres.dal;
 
+import java.util.List;
+
+import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.erreur.BusinessException;
+
 public interface UtilisateurDAO {
+	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	public void deleteUtilisateur(int noUtilisateur) throws BusinessException;
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
+	public Utilisateur selectByNom(String nom) throws BusinessException;
+	public Utilisateur selectById(int noUtilisateur) throws BusinessException;
+	public List<Utilisateur> selectAll() throws BusinessException;
+	Utilisateur selectByEmail(String email) throws BusinessException;
 
 }
