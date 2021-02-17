@@ -23,7 +23,8 @@ CREATE TABLE UTILISATEURS (
     ville            	VARCHAR(30) NOT NULL,
     mot_de_passe     	VARCHAR(30) NOT NULL,
     credit           	INTEGER NOT NULL,
-    administrateur   	bit NOT NULL
+    administrateur   	bit NOT NULL,
+    compte_actif   		bit NOT NULL
 )
 ALTER TABLE UTILISATEURS ADD CONSTRAINT utilisateur_pk PRIMARY KEY (no_utilisateur)
 
@@ -55,7 +56,7 @@ ON UPDATE NO ACTION
 
 CREATE TABLE IMAGES (
     no_image	   		INTEGER IDENTITY(1,1) NOT NULL,
-    chemin_url     		VARCHAR(200) NOT NULL,
+    chemin_url     		VARCHAR(200),
     no_article       	INTEGER NOT NULL
 )
 ALTER TABLE IMAGES ADD CONSTRAINT image_pk PRIMARY KEY (no_image)
@@ -80,7 +81,7 @@ ON UPDATE NO ACTION
 
 
 
-CREATE TABLE ENCHERES(	
+CREATE TABLE ENCHERES (
 	no_enchere  		INTEGER IDENTITY(1,1) NOT NULL,
 	date_enchere 		datetime NOT NULL,
 	montant_enchere 	INTEGER NOT NULL,
