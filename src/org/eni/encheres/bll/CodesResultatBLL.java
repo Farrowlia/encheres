@@ -8,6 +8,12 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_VILLE_RETRAIT_ERREUR = 20002;
 	
 
+	// Code erreur concernant UTILISATEUR
+	public static final int REGLE_EMAIL_ERREUR = 20100;
+	public static final int REGLE_PSEUDO_ERREUR = 20101;
+	public static final int REGLE_PASSWORD_ERREUR = 20102;
+
+
 	// Code erreur concernant ARTICLE_VENDU
 	public static final int REGLE_NOM_ARTICLE_ERREUR = 20100;
 	public static final int REGLE_DESCRIPTION_ARTICLE_ERREUR = 20101;
@@ -23,6 +29,7 @@ public abstract class CodesResultatBLL {
 	// Code erreur concernant ENCHERE
 	public static final int REGLE_DATE_ENCHERE_ERREUR = 20200;
 	public static final int REGLE_MONTANT_ENCHERE_ERREUR = 20201;
+
 
 
 	
