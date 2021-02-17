@@ -14,6 +14,7 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
+	private boolean compteActif;
 	
 	
 	public Utilisateur() {
@@ -32,11 +33,11 @@ public class Utilisateur {
 	 * @param motDePasse
 	 * @param credit
 	 * @param administrateur
-	 * 
+	 * @param compteActif
 	 * @author marieLaureV
 	 */
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+			String codePostal, String ville, String motDePasse, int credit, boolean administrateur, boolean compteActif) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -49,6 +50,7 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.compteActif = compteActif;
 	}
 
 
@@ -142,11 +144,21 @@ public class Utilisateur {
 	}
 
 	
-	public boolean getAdministrateur() {
+	public boolean isAdministrateur() {
 		return administrateur;
 	}
 	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
 	}
+
+	public boolean isCompteActif() {
+		return compteActif;
+	}
+
+	public void setCompteActif(boolean compteActif) {
+		this.compteActif = compteActif;
+	}
+	
+	
 
 }

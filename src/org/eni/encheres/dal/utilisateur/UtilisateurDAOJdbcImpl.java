@@ -15,7 +15,7 @@ import org.eni.encheres.erreur.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
 	
-	private static final String INSERT_USER = "INSERT INTO utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_USER = "INSERT INTO utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, compte_actif) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SELECT_ALL= "SELECT * FROM utilisateurs";
 	private static final String SELECT_BY_CRITERIA = SELECT_ALL + "WHERE ? = ?";
 	private static final String SELECT_BY_NOM_OR_PSEUDO = "SELECT * FROM utilisateurs WHERE pseudo = ? OR email = ?";
@@ -46,7 +46,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(index++, utilisateur.getVille());
 			pstmt.setString(index++, utilisateur.getMotDePasse());
 			pstmt.setInt(index++, utilisateur.getCredit());
-			pstmt.setBoolean(index++, utilisateur.getAdministrateur());
+			pstmt.setBoolean(index++, utilisateur.isAdministrateur());
+			pstmt.setBoolean(index++, utilisateur.isCompteActif());
 			pstmt.executeUpdate();
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -143,6 +144,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	
+	
 	/**
 	 * @author marieLaure
 	 * SE CONNECTER
@@ -162,7 +164,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			if (rs.next()) {
 				utilisateur = map(rs);
 			}
-
+			
 			rs.close();
 			pstmt.close();
 			
@@ -189,6 +191,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		utilisateur.setMotDePasse(rs.getString("email"));
 		utilisateur.setCredit(rs.getInt("credit"));
 		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+		utilisateur.setCompteActif(rs.getBoolean("compte_actif"));
 		return utilisateur;
 	}
 
