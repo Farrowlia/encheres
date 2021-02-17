@@ -7,6 +7,7 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_CODEPOSTAL_RETRAIT_ERREUR = 20001;
 	public static final int REGLE_VILLE_RETRAIT_ERREUR = 20002;
 	
+
 	// Code erreur concernant ARTICLE_VENDU
 	public static final int REGLE_NOM_ARTICLE_ERREUR = 20100;
 	public static final int REGLE_DESCRIPTION_ARTICLE_ERREUR = 20101;
@@ -14,13 +15,15 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_DATE_FIN_ENCHERE_ARTICLE_ERREUR = 20103;
 	public static final int REGLE_PRIX_INITIAL_ARTICLE_ERREUR = 20104;
 	
-	// Code erreur concernant UTILISATEUR
-	public static final int REGLE_XXXXXXX_ERREUR = 20200;
-		
+
+	
 	// Code erreur concernant CATEGORIE
-	public static final int REGLE_XXXXX_ERREUR = 20300;
+	public static final int REGLE_LIBELLE_ERREUR = 20100;
 	
 	// Code erreur concernant ENCHERE
-	public static final int REGLE_XXX_ERREUR = 20400;
+	public static final int REGLE_DATE_ENCHERE_ERREUR = 20200;
+	public static final int REGLE_MONTANT_ENCHERE_ERREUR = 20201;
+
+
 	
 }
