@@ -1,5 +1,8 @@
 package org.eni.encheres.dal;
 
+import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
+import org.eni.encheres.dal.utilisateur.UtilisateurDAOJdbcImpl;
+
 public class DAOFactory {
 	
 	private static UtilisateurDAO utilisateurDAO;

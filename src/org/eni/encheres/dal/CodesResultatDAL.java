@@ -11,11 +11,16 @@ public abstract class CodesResultatDAL {
 
 	//Codes erreur concernant UTILISATEUR
 	public static final int INSERT_UTILISATEUR_ERREUR = 10020;
+	public static final int SELECT_UTILISATEUR_ERREUR = 10021;
+	public static final int DELETE_UTILISATEUR_ERREUR = 10022;
+	public static final int UPDATE_UTILISATEUR_ERREUR = 10023;
+	public static final int UPDATE_PASSWORD_ERREUR = 10024;
 	
 	// Code erreur concernant ?
 	public static final int INSERT_XXXXX_ERREUR = 10100;
 	
 	//Code erreur insertion d'un objet null
 	public static final int INSERT_OBJET_NULL = 10200;
+	public static final int ERREUR_PASSWORD_NULL = 10201;
 	
 }

@@ -1,4 +1,4 @@
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.utilisateur;
 
 import java.util.List;
 
@@ -14,5 +14,6 @@ public interface UtilisateurDAO {
 	public Utilisateur selectById(int noUtilisateur) throws BusinessException;
 	public List<Utilisateur> selectAll() throws BusinessException;
 	Utilisateur selectByEmail(String email) throws BusinessException;
-
+	public Utilisateur selectByNomOrPseudo(String nomOuPseudo) throws BusinessException;
+	void updatePassword(int noUtilisateur, String pwd) throws BusinessException;
 }
