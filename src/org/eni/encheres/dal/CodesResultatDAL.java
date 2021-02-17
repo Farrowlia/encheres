@@ -10,7 +10,10 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_RETRAIT_ERREUR = 10003;
 	
 	// Code erreur concernant ARTICLE_VENDU
-	public static final int INSERT_XXXXXX_ERREUR = 10100;
+	public static final int INSERT_ARTICLE_VENDU_ERREUR = 10100;
+	public static final int UPDATE_ARTICLE_VENDU_ERREUR = 10101;
+	public static final int DELETE_ARTICLE_VENDU_ERREUR = 10102;
+	public static final int SELECT_ARTICLE_VENDU_ERREUR = 10103;
 	
 	// Code erreur concernant UTILISATEUR
 	public static final int INSERT_XXXXXXX_ERREUR = 10200;

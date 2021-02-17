@@ -8,7 +8,11 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_VILLE_RETRAIT_ERREUR = 20002;
 	
 	// Code erreur concernant ARTICLE_VENDU
-	public static final int REGLE_XXXXXX_ERREUR = 20100;
+	public static final int REGLE_NOM_ARTICLE_ERREUR = 20100;
+	public static final int REGLE_DESCRIPTION_ARTICLE_ERREUR = 20101;
+	public static final int REGLE_DATE_DEBUT_ENCHERE_ARTICLE_ERREUR = 20102;
+	public static final int REGLE_DATE_FIN_ENCHERE_ARTICLE_ERREUR = 20103;
+	public static final int REGLE_PRIX_INITIAL_ARTICLE_ERREUR = 20104;
 	
 	// Code erreur concernant UTILISATEUR
 	public static final int REGLE_XXXXXXX_ERREUR = 20200;
