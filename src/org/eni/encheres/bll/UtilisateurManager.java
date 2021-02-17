@@ -37,7 +37,8 @@ public class UtilisateurManager {
 												user.getVille(),
 												user.getMotDePasse(),
 												100, 
-												false);
+												false,
+												true);
 		
 		userDAO.insertUtilisateur(newUser);
 
