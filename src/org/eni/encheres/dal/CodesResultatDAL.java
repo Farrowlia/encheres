@@ -16,8 +16,26 @@ public abstract class CodesResultatDAL {
 	public static final int UPDATE_UTILISATEUR_ERREUR = 10023;
 	public static final int UPDATE_PASSWORD_ERREUR = 10024;
 	
-	// Code erreur concernant ?
-	public static final int INSERT_XXXXX_ERREUR = 10100;
+
+	// Code erreur concernant ARTICLE_VENDU
+	public static final int INSERT_ARTICLE_VENDU_ERREUR = 90100;
+	public static final int UPDATE_ARTICLE_VENDU_ERREUR = 90101;
+	public static final int DELETE_ARTICLE_VENDU_ERREUR = 90102;
+	public static final int SELECT_ARTICLE_VENDU_ERREUR = 90103;
+	
+	// Code erreur concernant CATEGORIE
+	public static final int INSERT_CATEGORIE_ERREUR = 10100;
+	public static final int UPDATE_CATEGORIE_ERREUR = 10101;
+	public static final int DELETE_CATEGORIE_ERREUR = 10102;
+	public static final int SELECT_CATEGORIE_ERREUR = 10103;
+	
+	// Code erreur concernant ENCHERE
+	public static final int INSERT_ENCHERE_ERREUR = 10200;
+	public static final int SELECT_ENCHERE_ERREUR = 10201;
+	
+
+	
+
 	
 	//Code erreur insertion d'un objet null
 	public static final int INSERT_OBJET_NULL = 10200;
