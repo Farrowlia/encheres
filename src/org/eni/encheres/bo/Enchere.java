@@ -1,18 +1,28 @@
 package org.eni.encheres.bo;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * 
+ * @author aleroy2020
+ *
+ */
 public class Enchere {
 	
 	private LocalDate dateEnchere;
-	private int montant_enchere;
+	private int montantEnchere;
 	private Utilisateur utilisateur;
 	private ArticleVendu articleVendu;
 	
 	
 	public Enchere() {
 	}
-
+	
+	//TODO vérifier la nécessiré de ce constructeur pour EnchereDAOJdbcImpl et les méthodes 
+	//SELECT BY UTILISATEUR et SELECT BY ARTICLEVENDU
+	public Enchere(int numero, String nom, Date date, int montantEnchere) {
+	}
 
 	public LocalDate getDateEnchere() {
 		return dateEnchere;
@@ -22,11 +32,11 @@ public class Enchere {
 	}
 
 
-	public int getMontant_enchere() {
-		return montant_enchere;
+	public int getMontanEnchere() {
+		return montantEnchere;
 	}
-	public void setMontant_enchere(int montant_enchere) {
-		this.montant_enchere = montant_enchere;
+	public void setMontantEnchere(int montantEnchere) {
+		this.montantEnchere = montantEnchere;
 	}
 
 
