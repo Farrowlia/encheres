@@ -1,4 +1,4 @@
-package org.eni.encheres.controleur;
+package org.eni.encheres.controller;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

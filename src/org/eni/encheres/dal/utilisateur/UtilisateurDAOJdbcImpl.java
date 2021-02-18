@@ -19,7 +19,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_ALL= "SELECT * FROM utilisateurs";
 	private static final String SELECT_BY_CRITERIA = SELECT_ALL + "WHERE ? = ?";
 	private static final String SELECT_BY_NOM_OR_PSEUDO = "SELECT * FROM utilisateurs WHERE pseudo = ? OR email = ?";
-	private static final String SELECT_BY_ID = SELECT_ALL + "WHERE no_utilisateur = ?";
+	private static final String SELECT_BY_ID = SELECT_ALL + " WHERE no_utilisateur = ?";
 	private static final String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
 	private static final String UPDATE_USER = "UPDATE utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit=?, administrateur=?, compte_actif=? WHERE no_utilisateur = ?";
 	private static final String UPDATE_PASSWORD = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?" ;
@@ -156,14 +156,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private Utilisateur map(ResultSet rs) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setNom(rs.getString("noUtilisateur"));
-		utilisateur.setPrenom(rs.getString("pseudo"));
-		utilisateur.setEmail(rs.getString("prenom"));
-		utilisateur.setTelephone(rs.getString("email"));
-		utilisateur.setRue(rs.getString("telephone"));
-		utilisateur.setCodePostal(rs.getString("rue"));
-		utilisateur.setVille(rs.getString("code_postal"));
-		utilisateur.setMotDePasse(rs.getString("email"));
+		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCodePostal(rs.getString("code_postal"));
+		utilisateur.setVille(rs.getString("ville"));
 		utilisateur.setCredit(rs.getInt("credit"));
 		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 		utilisateur.setCompteActif(rs.getBoolean("compte_actif"));
