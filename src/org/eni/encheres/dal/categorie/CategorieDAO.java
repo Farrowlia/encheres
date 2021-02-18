@@ -1,4 +1,4 @@
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.categorie;
 
 import java.util.List;
 

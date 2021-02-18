@@ -1,4 +1,4 @@
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.categorie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eni.encheres.bo.Categorie;
+import org.eni.encheres.dal.CodesResultatDAL;
+import org.eni.encheres.dal.ConnectionProvider;
 import org.eni.encheres.erreur.BusinessException;
 
 /**

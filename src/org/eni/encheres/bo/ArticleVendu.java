@@ -1,7 +1,6 @@
 package org.eni.encheres.bo;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ArticleVendu {
 	
@@ -12,47 +11,16 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private String etatVente; // peut prendre 4 valeurs différentes (en_attente, en_vente, annule, vendu) - par defaut (en_attente)
-	private List<String> imageUrl;
+	private String etatVente; // peut prendre 4 valeurs différentes (en_attente, en_vente, annule, vendu, archivé) - par defaut (en_attente)
 	private Utilisateur utilisateur;
 	private Categorie categorie;
 	
 	
 	public ArticleVendu() {
 	}
-	public ArticleVendu(int noArticle) {
-		this.noArticle = noArticle;
-	}
-	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int prixInitial, String etatVente, List<String> imageUrl,
-			Utilisateur utilisateur, Categorie categorie) {
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.prixInitial = prixInitial;
-		this.etatVente = etatVente;
-		this.imageUrl = imageUrl;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
-	}
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int prixInitial, String etatVente, List<String> imageUrl,
-			Utilisateur utilisateur, Categorie categorie) {
-		this.noArticle = noArticle;
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.prixInitial = prixInitial;
-		this.etatVente = etatVente;
-		this.imageUrl = imageUrl;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
-	}
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente, List<String> imageUrl,
-			Utilisateur utilisateur, Categorie categorie) {
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente, Utilisateur utilisateur,
+			Categorie categorie) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -61,10 +29,11 @@ public class ArticleVendu {
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
-		this.imageUrl = imageUrl;
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
 	}
+
+
 	public int getNoArticle() {
 		return noArticle;
 	}
@@ -126,14 +95,6 @@ public class ArticleVendu {
 	}
 	public void setEtatVente(String etatVente) {
 		this.etatVente = etatVente;
-	}
-
-
-	public List<String> getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(List<String> imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 
