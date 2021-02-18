@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+
+/*********************/
+/*    04. Header     */
+/*********************/
+.header {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url("../images/header-background.jpg") center center no-repeat;
+	background-size: cover;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.header .header-content {
+	/* padding-top: 8rem;
+	padding-bottom: 2.125rem; */
+	text-align: center;
+	width: 100%;
+}
+
+.header .text-container {
+	margin-bottom: 3rem;
+}
+
+.header h1 {
+	margin-bottom: 0.5rem;
+	color: #fff;
+}
+
+.header .p-large {
+	margin-bottom: 2rem;
+	color: #dfe5ec;
+}
+
+.header .btn-solid-lg {
+	margin-right: 0.5rem;
+	margin-bottom: 1.25rem;
+}
+
+.navbar-logo {
+	width: 50px;
+}
