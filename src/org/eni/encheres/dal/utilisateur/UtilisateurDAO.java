@@ -6,8 +6,7 @@ import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.erreur.BusinessException;
 
 public interface UtilisateurDAO {
-	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException;
-	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws BusinessException;
 	public void deleteUtilisateur(int noUtilisateur) throws BusinessException;
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
 	public Utilisateur selectByNom(String nom) throws BusinessException;

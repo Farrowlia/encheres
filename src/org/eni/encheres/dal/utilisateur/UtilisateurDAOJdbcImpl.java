@@ -19,21 +19,32 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_ALL= "SELECT * FROM utilisateurs";
 	private static final String SELECT_BY_CRITERIA = SELECT_ALL + "WHERE ? = ?";
 	private static final String SELECT_BY_NOM_OR_PSEUDO = "SELECT * FROM utilisateurs WHERE pseudo = ? OR email = ?";
-	private static final String SELECT_BY_ID = SELECT_ALL + "WHERE no_utilisateur = ?";
+	private static final String SELECT_BY_ID = SELECT_ALL + " WHERE no_utilisateur = ?";
 	private static final String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
-	private static final String UPDATE_USER = "UPDATE utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
+	private static final String UPDATE_USER = "UPDATE utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit=?, administrateur=?, compte_actif=? WHERE no_utilisateur = ?";
 	private static final String UPDATE_PASSWORD = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?" ;
 
+
+	/**
+	 * @apiNote va créer une nouvelle ligne dans la BDD (avec new noUtilisateur) ou mettre à jour la BDD 
+	 * @param Utilisateur (récupère tous les attributs)
+	 * @return void
+	 * @throws BusinessException
+	 */
 	@Override
-	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		if (utilisateur == null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
+		}
+		boolean userExists = isUserExists(utilisateur.getNoUtilisateur());
 		
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = connexion.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);
 			
-			if (utilisateur == null) {
-				BusinessException businessException = new BusinessException();
-				businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
-			}
+			
+			String requete = userExists ? UPDATE_USER : INSERT_USER;
+			PreparedStatement pstmt = connexion.prepareStatement(requete);
+			
 			
 			int index = 1;
 			pstmt.setString(index++, utilisateur.getPseudo());
@@ -48,49 +59,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setInt(index++, utilisateur.getCredit());
 			pstmt.setBoolean(index++, utilisateur.isAdministrateur());
 			pstmt.setBoolean(index++, utilisateur.isCompteActif());
-			pstmt.executeUpdate();
 			
-			ResultSet rs = pstmt.getGeneratedKeys();
-			while(rs.next()) {
-				utilisateur.setNoUtilisateur(rs.getInt(1));
-			}
-			
-			rs.close();
-			pstmt.close();
-				
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-				BusinessException exception = new BusinessException();
-				exception.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_ERREUR);
-				throw exception;
-			}
-		}
-
-
-	@Override
-	/**
-	 * UPDATE
-	 */
-	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = connexion.prepareStatement(UPDATE_USER);
-			
-			if (utilisateur == null) {
-				BusinessException businessException = new BusinessException();
-				businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
-			}
-			
-			int index = 1;
-			pstmt.setString(index++, utilisateur.getPseudo());
-			pstmt.setString(index++, utilisateur.getNom());
-			pstmt.setString(index++, utilisateur.getPrenom());
-			pstmt.setString(index++, utilisateur.getEmail());
-			pstmt.setString(index++, utilisateur.getTelephone());
-			pstmt.setString(index++, utilisateur.getRue());
-			pstmt.setString(index++, utilisateur.getCodePostal());
-			pstmt.setString(index++, utilisateur.getVille());
-			pstmt.setString(index++, utilisateur.getMotDePasse());
+			// si c'est une INSERT :
+			if (!userExists) {
 			pstmt.setInt(index++, utilisateur.getNoUtilisateur());
+			}
+			
 			pstmt.executeUpdate();
 			
 			pstmt.close();
@@ -98,7 +72,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			BusinessException exception = new BusinessException();
-			exception.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ERREUR);
+			int codeErreur = userExists ? CodesResultatDAL.UPDATE_UTILISATEUR_ERREUR : CodesResultatDAL.INSERT_UTILISATEUR_ERREUR;
+			exception.ajouterErreur(codeErreur);
 			throw exception;
 		}
 	}
@@ -181,14 +156,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private Utilisateur map(ResultSet rs) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setNom(rs.getString("noUtilisateur"));
-		utilisateur.setPrenom(rs.getString("pseudo"));
-		utilisateur.setEmail(rs.getString("prenom"));
-		utilisateur.setTelephone(rs.getString("email"));
-		utilisateur.setRue(rs.getString("telephone"));
-		utilisateur.setCodePostal(rs.getString("rue"));
-		utilisateur.setVille(rs.getString("code_postal"));
-		utilisateur.setMotDePasse(rs.getString("email"));
+		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCodePostal(rs.getString("code_postal"));
+		utilisateur.setVille(rs.getString("ville"));
 		utilisateur.setCredit(rs.getInt("credit"));
 		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 		utilisateur.setCompteActif(rs.getBoolean("compte_actif"));
@@ -286,5 +262,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 	}
 	
+	/**
+	 * @apiNote cette méthode vérifie si l'utilisateur existe déjà
+	 * @param noUtilisateur
+	 * @return booléen
+	 */
+	public boolean isUserExists(int noUtilisateur) {
+		try {
+			selectById(noUtilisateur);
+			return true;
+		} catch (BusinessException ex) {
+			return false;
+		}
+	}
 	
 }
