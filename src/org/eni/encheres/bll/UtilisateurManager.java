@@ -40,7 +40,7 @@ public class UtilisateurManager {
 												false,
 												true);
 		
-		userDAO.insertUtilisateur(newUser);
+		userDAO.createOrUpdateUtilisateur(newUser);
 
 	}
 	
@@ -73,12 +73,24 @@ public class UtilisateurManager {
 	}
 	
 	/**
+	 * voir le profil d'un autre utilisateur (avec pseudo en paramètre)
+	 * @param pseudo
+	 * @return
+	 * @throws BusinessException
+	 */
+	public Utilisateur voirProfil(String pseudo) throws BusinessException {
+		return userDAO.selectByPseudo(pseudo);
+	}
+	
+	/**
 	 * MODIFIER SON PROFIL
 	 * @param utilisateur
 	 * @throws BusinessException
 	 */
 	public void modifierProfil(Utilisateur utilisateur) throws BusinessException {
-		userDAO.updateUtilisateur(utilisateur);
+		BusinessException businessException = new BusinessException();
+		validerUtilisateur(utilisateur, businessException);
+		userDAO.createOrUpdateUtilisateur(utilisateur);
 	}
 	
 	/**
@@ -88,16 +100,6 @@ public class UtilisateurManager {
 	 */
 	public void deleteCompte(int id) throws BusinessException {
 		userDAO.deleteUtilisateur(id);
-	}
-	
-	/**
-	 * voir le profil d'un autre utilisateur
-	 * @param pseudo
-	 * @return
-	 * @throws BusinessException
-	 */
-	public Utilisateur voirProfil(String pseudo) throws BusinessException {
-		return userDAO.selectByPseudo(pseudo);
 	}
 	
 	
@@ -115,9 +117,10 @@ public class UtilisateurManager {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_PSEUDO_ERREUR);
 			}
 			
-			//vérif que le mail est unique
+			//vérif que le mail est unique + 
 			if(userDAO.selectByEmail(utilisateur.getEmail()) != null) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_EMAIL_ERREUR);
+				//TODO vérif format de l'adresse mail
 			}
 			
 			if (utilisateur.getMotDePasse().length()>30) {
