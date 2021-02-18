@@ -1,4 +1,4 @@
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.enchere;
 
 import java.util.List;
 
@@ -16,6 +16,8 @@ public interface EnchereDAO {
 
 	
 	public void insertEnchere(Enchere enchere) throws BusinessException;
-	public List<Enchere> selectEnchere(Utilisateur utilisateur) throws BusinessException;
-	public List<Enchere> selectEnchere(ArticleVendu articleVendu) throws BusinessException;
+	public List<Enchere> selectEncheres(Utilisateur utilisateur) throws BusinessException;
+	public List<Enchere> selectEncheres(ArticleVendu articleVendu) throws BusinessException;
+	
 }
+	

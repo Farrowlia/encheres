@@ -1,7 +1,11 @@
 package org.eni.encheres.dal;
 
+import org.eni.encheres.dal.categorie.CategorieDAO;
+import org.eni.encheres.dal.categorie.CategorieDAOJdbcImpl;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAOJdbcImpl;
+import org.eni.encheres.erreur.EnchereDAO;
+import org.eni.encheres.erreur.EnchereDAOJdbcImpl;
 
 public class DAOFactory {
 	
