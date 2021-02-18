@@ -18,10 +18,12 @@ public class Enchere {
 	
 	public Enchere() {
 	}
-	
-	//TODO vérifier la nécessiré de ce constructeur pour EnchereDAOJdbcImpl et les méthodes 
-	//SELECT BY UTILISATEUR et SELECT BY ARTICLEVENDU
-	public Enchere(int numero, String nom, Date date, int montantEnchere) {
+
+	public Enchere(LocalDate dateEnchere, int montantEnchere, Utilisateur utilisateur, ArticleVendu articleVendu) {
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+		this.utilisateur = utilisateur;
+		this.articleVendu = articleVendu;
 	}
 
 	public LocalDate getDateEnchere() {

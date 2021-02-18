@@ -1,5 +1,7 @@
 package org.eni.encheres.dal;
 
+import org.eni.encheres.dal.categorie.CategorieDAO;
+import org.eni.encheres.dal.categorie.CategorieDAOJdbcImpl;
 import org.eni.encheres.dal.articlevendu.ArticleVenduDAO;
 import org.eni.encheres.dal.articlevendu.ArticleVenduDAOJdbcImpl;
 import org.eni.encheres.dal.image.ImageDAO;
@@ -8,6 +10,7 @@ import org.eni.encheres.dal.retrait.RetraitDAO;
 import org.eni.encheres.dal.retrait.RetraitDAOJdbcImpl;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAOJdbcImpl;
+
 
 public class DAOFactory {
 	
