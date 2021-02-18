@@ -15,32 +15,50 @@ public class UtilisateurManager {
 		userDAO = DAOFactory.getUtilisateurDAO();
 	}
 	
+	/**
+	 * MODIFIER SON PROFIL
+	 * @param utilisateur
+	 * @throws BusinessException
+	 */
+	public void modifierProfil(Utilisateur utilisateur) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		validerUtilisateur(utilisateur, businessException);
+		userDAO.createOrUpdateUtilisateur(utilisateur);
+	}
+	
 	
 	//CREER UN COMPTE
-	public void creerCompte(Utilisateur user) throws BusinessException {
+	public void saveNewOrExistingCompte(Utilisateur user) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 		
 		validerUtilisateur(user, businessException);
-		
 		if(businessException.hasErreurs()) {
 			throw businessException;
 		}
 		
-		//mettre le crédit à '100' et administrateur à 'false'
-		Utilisateur newUser = new Utilisateur(	user.getPseudo(), 
-												user.getNom(), 
-												user.getPrenom(), 
-												user.getEmail(),
-												user.getTelephone(),
-												user.getRue(),
-												user.getCodePostal(),
-												user.getVille(),
-												user.getMotDePasse(),
-												100, 
-												false,
-												true);
+		if (user.getNoUtilisateur() != 0) {
+			//si le compte est modifiable et modifié, enregistrer les modifs
+			userDAO.createOrUpdateUtilisateur(user);
+		} else {
+			//création d'un compte
+			//mettre le crédit à '100' et administrateur à 'false'
+			Utilisateur newUser = new Utilisateur(	user.getPseudo(), 
+					user.getNom(), 
+					user.getPrenom(), 
+					user.getEmail(),
+					user.getTelephone(),
+					user.getRue(),
+					user.getCodePostal(),
+					user.getVille(),
+					user.getMotDePasse(),
+					100, 
+					false,
+					true);
+			
+			userDAO.createOrUpdateUtilisateur(newUser);
+		}
 		
-		userDAO.createOrUpdateUtilisateur(newUser);
+		
 
 	}
 	
@@ -82,16 +100,7 @@ public class UtilisateurManager {
 		return userDAO.selectByPseudo(pseudo);
 	}
 	
-	/**
-	 * MODIFIER SON PROFIL
-	 * @param utilisateur
-	 * @throws BusinessException
-	 */
-	public void modifierProfil(Utilisateur utilisateur) throws BusinessException {
-		BusinessException businessException = new BusinessException();
-		validerUtilisateur(utilisateur, businessException);
-		userDAO.createOrUpdateUtilisateur(utilisateur);
-	}
+
 	
 	/**
 	 * supprimer le compte
