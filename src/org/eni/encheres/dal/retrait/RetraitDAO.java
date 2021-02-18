@@ -1,4 +1,4 @@
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.retrait;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Retrait;

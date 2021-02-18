@@ -16,6 +16,7 @@ public class BusinessException extends Exception {
 		this.listeCodesErreur = new ArrayList<>();
 	}
 	
+	
 	// Code de l'erreur doit avoir un message associé dans un fichier properties
 	public void ajouterErreur(int code)	{
 		if(!this.listeCodesErreur.contains(code)) {
