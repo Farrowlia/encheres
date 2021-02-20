@@ -2,6 +2,9 @@ package org.eni.encheres.bll;
 
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
@@ -62,10 +65,7 @@ public class UtilisateurManager {
 
 	}
 	
-	//SE CONNECTER
-	public void connection(String pseudoOuNom) throws BusinessException {
-		userDAO.selectByNomOrPseudo(pseudoOuNom);
-	}
+
 	
 	/**
 	 * Mise à jour du mot de passe après demande de réinitialisation
@@ -81,7 +81,7 @@ public class UtilisateurManager {
 	}
 	
 	/**
-	 * AFFICHER SON PROFIL
+	 * AFFICHER SON PROFIL via noUtilisateur
 	 * @param id
 	 * @return Utilisateur
 	 * @throws BusinessException
@@ -142,4 +142,8 @@ public class UtilisateurManager {
 			
 		}
 	}
+
+	
+	
+
 }

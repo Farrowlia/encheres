@@ -22,7 +22,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_ID = SELECT_ALL + " WHERE no_utilisateur = ?";
 	private static final String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
 	private static final String UPDATE_USER = "UPDATE utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit=?, administrateur=?, compte_actif=? WHERE no_utilisateur = ?";
-	private static final String UPDATE_PASSWORD = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?" ;
+	private static final String UPDATE_PASSWORD = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?";
 
 
 	/**
@@ -119,7 +119,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	
-	
+	//TODO verifier cette méthode
 	/**
 	 * @author marieLaure
 	 * SE CONNECTER
@@ -127,7 +127,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @return utilisateur
 	 */
 	@Override
-	public Utilisateur selectByNomOrPseudo(String nomOuPseudo) throws BusinessException {
+	public Utilisateur selectByEmailOrPseudo(String nomOuPseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = connexion.prepareStatement(SELECT_BY_NOM_OR_PSEUDO);
@@ -165,6 +165,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		utilisateur.setRue(rs.getString("rue"));
 		utilisateur.setCodePostal(rs.getString("code_postal"));
 		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
 		utilisateur.setCredit(rs.getInt("credit"));
 		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 		utilisateur.setCompteActif(rs.getBoolean("compte_actif"));

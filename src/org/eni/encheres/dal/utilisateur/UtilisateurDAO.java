@@ -13,6 +13,6 @@ public interface UtilisateurDAO {
 	public Utilisateur selectById(int noUtilisateur) throws BusinessException;
 	public List<Utilisateur> selectAll() throws BusinessException;
 	Utilisateur selectByEmail(String email) throws BusinessException;
-	public Utilisateur selectByNomOrPseudo(String nomOuPseudo) throws BusinessException;
+	public Utilisateur selectByEmailOrPseudo(String emailOuPseudo) throws BusinessException;
 	void updatePassword(int noUtilisateur, String pwd) throws BusinessException;
 }
