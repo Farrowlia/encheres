@@ -42,6 +42,7 @@ public class UtilisateurController {
 	public void enregistrerProfil(@FormParam("paramProfil") Utilisateur utilisateur) throws BusinessException {
 		UtilisateurManager um = new UtilisateurManager();
 		um.saveNewOrExistingCompte(utilisateur);
+		
 	}
 	
 //	/**
