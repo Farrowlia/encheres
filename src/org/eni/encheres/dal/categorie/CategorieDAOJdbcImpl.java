@@ -13,7 +13,7 @@ import org.eni.encheres.erreur.BusinessException;
 
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 	
-	private static final String INSERT_CATEGORIE = "INSERT INTO CATEGORIES (no_categorie, libelle) values(?, ?);"; 
+	private static final String INSERT_CATEGORIE = "INSERT INTO CATEGORIES (libelle) values(?);";
 	private static final String UPDATE_CATEGORIE = "UPDATE CATEGORIES SET libelle = ? WHERE no_categorie = ?;";
 	private static final String DELETE_CATEGORIE = "DELETE FROM CATEGORIES WHERE no_categorie = ?;";
 	private static final String SELECT_CATEGORIE = "SELECT * FROM CATEGORIES";
@@ -24,7 +24,6 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			PreparedStatement pstmt = connexion.prepareStatement(INSERT_CATEGORIE);) {
 			
 			pstmt.setInt(1, categorie.getNoCategorie());
-			pstmt.setString(2, categorie.getLibelle());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -70,7 +69,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	@Override
 	public List<Categorie> selectCategorie() throws BusinessException {
-		List<Categorie> listeCategories = new ArrayList<Categorie>();
+		List<Categorie> listeCategorie = new ArrayList<Categorie>();
 		
 		try (Connection connexion = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = connexion.prepareStatement(SELECT_CATEGORIE);) {
@@ -78,7 +77,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			ResultSet rs = pstmt.executeQuery();
 					
 			while(rs.next()) {
-				listeCategories.add(new Categorie(rs.getInt("no_categorie"), rs.getString("libelle")));
+				listeCategorie.add(new Categorie(rs.getInt("no_categorie"), rs.getString("libelle")));
 			}
 			rs.close();
 			
@@ -88,7 +87,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			exception.ajouterErreur(CodesResultatCategorieDAL.SELECT_CATEGORIE_ERREUR);
 			throw exception;
 		}
-		return listeCategories;
+		return listeCategorie;
 	}
 	
 }
