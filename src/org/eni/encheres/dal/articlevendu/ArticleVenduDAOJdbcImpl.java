@@ -18,14 +18,14 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, etat_vente, no_utilisateur, no_categorie) VALUES(?,?,?,?,?,?,?,?);";
 	private static final String UPDATE_ARTICLE_VENDU = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, etat_vente = ?, no_categorie = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	private static final String SELECT_ARTICLE_VENDU_BY_VENTE_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie WHERE art.no_utilisateur = ?;";
+	private static final String SELECT_ARTICLE_VENDU_BY_VENTE_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie WHERE art.no_utilisateur = ? ORDER BY no_article DESC;";
 	private static final String SELECT_ARTICLE_VENDU_BY_ACHAT_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN ENCHERES AS ench ON art.no_article = ench.no_article WHERE ench.no_utilisateur = ? ORDER BY montant_enchere DESC;";
 	private static final String SELECT_ARTICLE_VENDU_BY_RECHERCHE = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS user ON art.no_utilisateur = user.no_utilisateur";
 
 	@Override
-	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
+	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
 		try (Connection connexion = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = connexion.prepareStatement(INSERT_ARTICLE_VENDU);) {
+			PreparedStatement pstmt = connexion.prepareStatement(INSERT_ARTICLE_VENDU, PreparedStatement.RETURN_GENERATED_KEYS);) {
 				
 			pstmt.setString(1, articleVendu.getNomArticle());
 			pstmt.setString(2, articleVendu.getDescription());
@@ -36,6 +36,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setInt(7, articleVendu.getUtilisateur().getNoUtilisateur());
 			pstmt.setInt(8, articleVendu.getCategorie().getNoCategorie());
 			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+					if (rs.next()) {
+						articleVendu.setNoArticle(rs.getInt(1));
+					}
+			
+			return articleVendu;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
