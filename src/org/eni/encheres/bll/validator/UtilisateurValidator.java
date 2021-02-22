@@ -50,7 +50,8 @@ public class UtilisateurValidator {
 		}
 
 		try {
-			validationMotsDePasse(utilisateur.getMotDePasse(), MapUtils.getValeurChamp(req, MapUtils.CHAMP_CONF));
+			validationMotsDePasse(utilisateur.getMotDePasse(), MapUtils.getValeurChamp(request, MapUtils.CHAMP_CONF));
+		//TODO DTO
 		} catch (Exception ex) {
 			inscriptionException.setErreur(MapUtils.CHAMP_PWD, ex.getMessage());
 			inscriptionException.setErreur(MapUtils.CHAMP_CONF, null);
