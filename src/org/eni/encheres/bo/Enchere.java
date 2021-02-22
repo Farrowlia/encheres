@@ -1,13 +1,7 @@
 package org.eni.encheres.bo;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
-/**
- * 
- * @author aleroy2020
- *
- */
 public class Enchere {
 	
 	private LocalDate dateEnchere;
@@ -18,7 +12,6 @@ public class Enchere {
 	
 	public Enchere() {
 	}
-
 	public Enchere(LocalDate dateEnchere, int montantEnchere, Utilisateur utilisateur, ArticleVendu articleVendu) {
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
@@ -26,6 +19,7 @@ public class Enchere {
 		this.articleVendu = articleVendu;
 	}
 
+	
 	public LocalDate getDateEnchere() {
 		return dateEnchere;
 	}
