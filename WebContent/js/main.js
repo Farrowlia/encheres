@@ -15,10 +15,10 @@ $(function() {
         var scroll = $(window).scrollTop();
         if (scroll < 20) {
             $(".navbar-area").removeClass("sticky");
-            $(".navbar-area img").attr("src", "src/images/logo-blanc.png");
+            $(".navbar-area img").attr("src", "images/logo-blanc.png");
         } else {
             $(".navbar-area").addClass("sticky");
-            $(".navbar-area img").attr("src", "src/images/logo-vert.png");
+            $(".navbar-area img").attr("src", "images/logo-vert.png");
         }
     });
 

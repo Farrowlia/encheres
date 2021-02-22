@@ -12,7 +12,7 @@ import org.eni.encheres.erreur.BusinessException;
 public interface ArticleVenduDAO {
 	
 	
-	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException;
+	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException;
 	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException;
 	public void deleteArticleVendu(ArticleVendu articleVendu) throws BusinessException;
 	public List<ArticleVendu> selectArticleVenduByVenteUtilisateur(Utilisateur utilisateur) throws BusinessException;

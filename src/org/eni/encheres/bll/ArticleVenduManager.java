@@ -20,7 +20,7 @@ private ArticleVenduDAO articleVenduDAO;
 	}
 	
 	
-	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
+	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
 		BusinessException exception = new BusinessException();
 		valider(articleVendu, exception);
 		articleVendu.setEtatVente("en_attente"); // valeur par defaut obligatoire lors de l'insert
@@ -28,9 +28,7 @@ private ArticleVenduDAO articleVenduDAO;
 		if (exception.hasErreurs()) {
 			throw exception;
 		}
-		else {
-			articleVenduDAO.insertArticleVendu(articleVendu);
-		}
+		return articleVenduDAO.insertArticleVendu(articleVendu);
 	}
 	
 	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException {
@@ -86,7 +84,5 @@ private ArticleVenduDAO articleVenduDAO;
 			exeption.ajouterErreur(CodesResultatBLL.REGLE_PRIX_INITIAL_ARTICLE_ERREUR);
 		}
 	}
-	
-	
 
 }
