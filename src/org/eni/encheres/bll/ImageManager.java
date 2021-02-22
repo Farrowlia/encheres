@@ -52,7 +52,7 @@ public class ImageManager {
 		
 		private void valider(Image image, BusinessException exeption) {
 			if (image.getCheminUrl() == null || image.getCheminUrl().equals("") || image.getCheminUrl().length() > 200) {
-				exeption.ajouterErreur(CodesResultatBLL.REGLE_NOM_ARTICLE_ERREUR); // TODO REGLE ERREUR
+				exeption.ajouterErreur(CodesResultatBLL.REGLE_URL_IMAGE_ERREUR);
 			}
 		}
 

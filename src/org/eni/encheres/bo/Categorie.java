@@ -1,10 +1,5 @@
 package org.eni.encheres.bo;
 
-/**
- * 
- * @author aleroy2020
- *
- */
 public class Categorie {
 	
 	private int noCategorie;
@@ -13,15 +8,11 @@ public class Categorie {
 	
 	public Categorie() {
 	}
-	
-	public Categorie(int noCategorie) {
-		this.noCategorie = noCategorie;
-	}
-
 	public Categorie(int noCategorie, String libelle) {
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
 	}
+	
 	
 	public int getNoCategorie() {
 		return noCategorie;

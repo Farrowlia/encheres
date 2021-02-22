@@ -86,7 +86,5 @@ private ArticleVenduDAO articleVenduDAO;
 			exeption.ajouterErreur(CodesResultatBLL.REGLE_PRIX_INITIAL_ARTICLE_ERREUR);
 		}
 	}
-	
-	
 
 }
