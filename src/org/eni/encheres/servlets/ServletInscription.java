@@ -2,8 +2,6 @@ package org.eni.encheres.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,13 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eni.encheres.authentification.InscriptionException;
-import org.eni.encheres.authentification.InscriptionForm;
 import org.eni.encheres.bll.UtilisateurManager;
-import org.eni.encheres.bll.validator.UtilisateurValidator;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.erreur.BusinessException;
-import org.eni.encheres.utils.MapUtils;
-import static org.eni.encheres.utils.MapUtils.getValeurChamp;;
+import org.eni.encheres.utils.MapUtils;;
 
 /**
  * Servlet implementation class ServletInscription
@@ -54,25 +48,23 @@ public class ServletInscription extends HttpServlet {
 
 		UtilisateurManager um = new UtilisateurManager();
 
+		Utilisateur utilisateur = MapUtils.mapUtilisateur(request);
+		
 		try {
-			Utilisateur utilisateur = MapUtils.mapUtilisateur(request);;
-
-				// Si échec de la validation de l'utilisateur
-				/* Stockage du formulaire et du bean dans l'objet request */
-				request.setAttribute(ATT_FORM, inscriptionException);
-				request.setAttribute(ATT_USER, utilisateur);
-
-				/* Transmission de la paire d'objets request/response à notre JSP */
-				this.getServletContext().getRequestDispatcher(URL_JSP_INSCRIPTION).forward(request, response);
-				
-			// TODO Redirection vers page voulue
-
 			um.saveNewOrExistingCompte(utilisateur);
 		} catch (SQLException e) {
 			// TODO Renvoyer une réponse indiquant un prob avec la base de données
 			// (i.e. initialiser variable ici et l'appeler dans setattribute
-		}
+		} catch (InscriptionException inscriptionException) {
+			// Si échec de la validation de l'utilisateur
+			/* Stockage du formulaire et du bean dans l'objet request */
+			request.setAttribute(ATT_FORM, inscriptionException);
+			request.setAttribute(ATT_USER, utilisateur);
 
+			/* Transmission de la paire d'objets request/response à notre JSP */
+			this.getServletContext().getRequestDispatcher(URL_JSP_INSCRIPTION).forward(request, response);
+		}
+		// TODO Redirection vers page voulue
 	}
 
 }
