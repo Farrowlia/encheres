@@ -59,7 +59,7 @@ public class UtilisateurController {
 	@POST
 	@Path("/connection")
 	public void login(@FormParam("login") String login, @FormParam("pwd") String pwd, @Context HttpServletRequest request) {
-		Utilisateur user = um.login(login, pwd);
+		Utilisateur user = auth.login(login, pwd);
 		/* Création ou récupération de la session */
 		HttpSession session = request.getSession();
 		/* Mise en session de l'utilisateur */

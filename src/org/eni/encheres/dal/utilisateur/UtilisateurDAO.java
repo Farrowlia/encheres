@@ -1,18 +1,19 @@
 package org.eni.encheres.dal.utilisateur;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.erreur.BusinessException;
 
 public interface UtilisateurDAO {
-	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws BusinessException;
-	public void deleteUtilisateur(int noUtilisateur) throws BusinessException;
-	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
-	public Utilisateur selectByNom(String nom) throws BusinessException;
-	public Utilisateur selectById(int noUtilisateur) throws BusinessException;
-	public List<Utilisateur> selectAll() throws BusinessException;
-	Utilisateur selectByEmail(String email) throws BusinessException;
-	public Utilisateur selectByEmailOrPseudo(String emailOuPseudo) throws BusinessException;
-	void updatePassword(int noUtilisateur, String pwd) throws BusinessException;
+	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws SQLException;
+	public void deleteUtilisateur(int noUtilisateur) throws SQLException;
+	public Utilisateur selectByPseudo(String pseudo) throws SQLException;
+	public Utilisateur selectByNom(String nom) throws SQLException;
+	public Utilisateur selectById(int noUtilisateur) throws SQLException;
+	public List<Utilisateur> selectAll() throws SQLException;
+	Utilisateur selectByEmail(String email) throws SQLException;
+	public Utilisateur selectByEmailOrPseudo(String emailOuPseudo) throws SQLException;
+	void updatePassword(int noUtilisateur, String pwd) throws SQLException;
 }

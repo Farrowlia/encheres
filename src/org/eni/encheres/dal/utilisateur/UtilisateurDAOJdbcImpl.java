@@ -32,7 +32,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @throws BusinessException
 	 */
 	@Override
-	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws SQLException {
+		
+		//TODO getGeneratedKeys
 		if (utilisateur == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
@@ -69,17 +71,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			
 			pstmt.close();
 				
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			BusinessException exception = new BusinessException();
-			int codeErreur = userExists ? CodesResultatDAL.UPDATE_UTILISATEUR_ERREUR : CodesResultatDAL.INSERT_UTILISATEUR_ERREUR;
-			exception.ajouterErreur(codeErreur);
-			throw exception;
-		}
+		} 
 	}
 
 	@Override
-	public void deleteUtilisateur(int noUtilisateur) throws BusinessException {
+	public void deleteUtilisateur(int noUtilisateur) throws SQLException {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = connexion.prepareStatement(DELETE_USER);
 			
@@ -87,16 +83,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.executeUpdate();
 			
 			pstmt.close();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			BusinessException exception = new BusinessException();
-			exception.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ERREUR);
-			throw exception;
-		}
+		} 
 	}
 	
 	@Override
-	public Utilisateur selectById(int noUtilisateur) throws BusinessException {
+	public Utilisateur selectById(int noUtilisateur) throws SQLException {
 		Utilisateur utilisateur = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = connexion.prepareStatement(SELECT_BY_ID);
@@ -109,12 +100,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs.close();
 			pstmt.close();
 			
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			BusinessException exception = new BusinessException();
-			exception.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_ERREUR);
-			throw exception;
 		}
+		
 		return utilisateur;
 	}
 	
@@ -127,7 +114,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @return utilisateur
 	 */
 	@Override
-	public Utilisateur selectByEmailOrPseudo(String nomOuPseudo) throws BusinessException {
+	public Utilisateur selectByEmailOrPseudo(String nomOuPseudo) throws SQLException {
 		Utilisateur utilisateur = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = connexion.prepareStatement(SELECT_BY_NOM_OR_PSEUDO);
@@ -143,13 +130,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs.close();
 			pstmt.close();
 			
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			BusinessException exception = new BusinessException();
-			exception.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_ERREUR);
-			throw exception;
-		}
-		
+		} 
 		return utilisateur;
 	}
 
@@ -173,12 +154,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
+	public Utilisateur selectByPseudo(String pseudo) throws SQLException {
 		return selectByCriteria(Criteres.PSEUDO, pseudo);
 	}
 	
 	@Override
-	public Utilisateur selectByEmail(String email) throws BusinessException {
+	public Utilisateur selectByEmail(String email) throws SQLException {
 		return selectByCriteria(Criteres.EMAIL, email);
 	}
 	
@@ -189,7 +170,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @return utilisateur
 	 * @throws BusinessException
 	 */
-	private Utilisateur selectByCriteria(Criteres critere, String value) throws BusinessException {
+	private Utilisateur selectByCriteria(Criteres critere, String value) throws SQLException {
 		Utilisateur utilisateur = null;
 		try (Connection connexion = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = connexion.prepareStatement(SELECT_BY_CRITERIA);) {
@@ -207,13 +188,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs.close();
 			pstmt.close();
 			
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			BusinessException exception = new BusinessException();
-			exception.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_ERREUR);
-			throw exception;
 		}
-		
 		
 		return utilisateur;
 		
@@ -222,14 +197,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	//les méthodes suivantes ne sont pas utilisées pour l'instant
 	
 	@Override
-	public List<Utilisateur> selectAll() throws BusinessException {
+	public List<Utilisateur> selectAll() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public Utilisateur selectByNom(String nom) throws BusinessException {
+	public Utilisateur selectByNom(String nom) throws SQLException {
 		return selectByCriteria(Criteres.NOM, nom);
 	}
 
@@ -239,7 +214,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * Mise à jour du mot de passe après demande de réinitialisation
 	 */
-	public void updatePassword(int noUtilisateur, String pwd) throws BusinessException {
+	public void updatePassword(int noUtilisateur, String pwd) throws SQLException {
 
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = connexion.prepareStatement(UPDATE_PASSWORD);
@@ -255,11 +230,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			
 			pstmt.close();
 				
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			BusinessException exception = new BusinessException();
-			exception.ajouterErreur(CodesResultatDAL.UPDATE_PASSWORD_ERREUR);
-			throw exception;
 		}
 	}
 	
@@ -267,14 +237,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @apiNote cette méthode vérifie si l'utilisateur existe déjà
 	 * @param noUtilisateur
 	 * @return booléen
+	 * @throws SQLException 
 	 */
-	public boolean isUserExists(int noUtilisateur) {
-		try {
-			selectById(noUtilisateur);
-			return true;
-		} catch (BusinessException ex) {
-			return false;
-		}
+	public boolean isUserExists(int noUtilisateur) throws SQLException {
+			return selectById(noUtilisateur) != null;	
 	}
 	
 }
