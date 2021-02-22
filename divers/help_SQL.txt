@@ -1,0 +1,9 @@
+- Créer base de donnée à l'aide du script nommée BDD_ENCHERES
+- Créer un nouvel utilisateur(connexion)
+	nom d'accès : userEncheresBDD
+	choisir "authentification SQL Server
+	password : passwordUserEncheres
+	Décocher la case "Appliquer la stratégie de mot de passe"
+	Dans l'onglet "Mappage d'utilisateur" :
+		cocher BDD_ENCHERES
+		puis cocher datareader + datawriter
