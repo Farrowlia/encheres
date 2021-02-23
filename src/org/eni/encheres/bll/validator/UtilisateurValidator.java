@@ -3,13 +3,12 @@ package org.eni.encheres.bll.validator;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-import javax.security.auth.login.LoginException;
-import javax.servlet.http.HttpServletRequest;
-
 import org.eni.encheres.authentification.InscriptionException;
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.utils.MapUtils;
+
+import com.microsoft.sqlserver.jdbc.StringUtils;
 
 public class UtilisateurValidator {
 
@@ -40,10 +39,10 @@ public class UtilisateurValidator {
 					"Ce pseudo ne doit contenir que des caractères alpha-numériques");
 		}
 
-		if (utilisateur.getCodePostal() != null && utilisateur.getCodePostal().trim().length() != 5
-				&& !utilisateur.getCodePostal().matches("[0-9]")) {
-			inscriptionException.setErreur(MapUtils.CHAMP_CP, "Le format du code postal n'est pas correct");
-		}
+//		if (utilisateur.getCodePostal() != null && utilisateur.getCodePostal().trim().length() != 5
+//				&& !utilisateur.getCodePostal().matches("[0-9]")) {
+//			inscriptionException.setErreur(MapUtils.CHAMP_CP, "Le format du code postal n'est pas correct");
+//		}
 
 		try {
 			validationEmail(utilisateur.getEmail());
@@ -99,18 +98,18 @@ public class UtilisateurValidator {
 	/**
 	 * Valide les mots de passe saisis.
 	 */
-	public static void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
+	public static void validationMotsDePasse(String motDePasse, String confirmation, InscriptionException inscriptionException) {
 
 		if (motDePasse != null && confirmation != null) {
 			if (!motDePasse.equals(confirmation)) {
-				throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
+				inscriptionException.setErreur(MapUtils.CHAMP_CONF, "Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
 			} else if (motDePasse.trim().length() < 5) {
-				throw new Exception("Les mots de passe doivent contenir au moins 5 caractères.");
+				inscriptionException.setErreur(MapUtils.CHAMP_PWD, "Les mots de passe doivent contenir au moins 5 caractères.");
 			} else if (motDePasse.length() > 30) {
-				throw new Exception("Retapez un mot de passe de moins de 30 caractères sans caractères spéciaux");
+				inscriptionException.setErreur(MapUtils.CHAMP_PWD, "Retapez un mot de passe de moins de 30 caractères sans caractères spéciaux");
 			}
 		} else {
-			throw new Exception("Merci de saisir et confirmer votre mot de passe.");
+			inscriptionException.setErreur(MapUtils.CHAMP_PWD, "Merci de saisir et confirmer votre mot de passe.");
 		}
 	}
 
@@ -118,7 +117,7 @@ public class UtilisateurValidator {
 	 * Valide le texte saisi.
 	 */
 	private static void validationTexte(String nomChamp) throws Exception {
-		if (nomChamp != null && nomChamp.trim().length() < 3) {
+		if (nomChamp == null || nomChamp.trim().length() < 3) {
 			throw new Exception("Le champ " + nomChamp + " doit contenir au moins 3 caractères.");
 		}
 	}
@@ -130,7 +129,7 @@ public class UtilisateurValidator {
 	 * @throws Exception
 	 */
 	private static void validationCodePostal(String codePostal) throws Exception {
-		if (codePostal != null && codePostal.trim().length() != 5 && !codePostal.matches("[0-9]")) {
+		if (codePostal == null || codePostal.trim().length() != 5 || !StringUtils.isNumeric(codePostal)) {
 			throw new Exception("Le format du code postal n'est pas correct");
 		}
 	}
@@ -142,8 +141,9 @@ public class UtilisateurValidator {
 	 * @throws Exception
 	 */
 	private static void validationTelephone(String telephone) throws Exception {
-		if (telephone != null && telephone.trim().length() != 10 && !telephone.matches("[0-9]")) {
+		if (telephone == null || telephone.trim().length() != 10 || !StringUtils.isNumeric(telephone)) {
 			throw new Exception("Merci de saisir un numéro à 10 chiffres");
 		}
 	}
+	
 }
