@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eni.encheres.authentification.InscriptionException;
 import org.eni.encheres.bll.UtilisateurManager;
+import org.eni.encheres.bll.validator.UtilisateurValidator;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.utils.MapUtils;;
+import org.eni.encheres.utils.MapUtils;
+import org.eni.encheres.utils.URL_JSP;;
 
 /**
  * Servlet implementation class ServletInscription
@@ -21,7 +23,6 @@ import org.eni.encheres.utils.MapUtils;;
 public class ServletInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public static final String URL_JSP_INSCRIPTION = "/WEB-INF/jsp/formInscription.jsp";
 
 	private static final String ATT_USER = "utilisateur";
 	private static final String ATT_FORM = "form";
@@ -32,7 +33,7 @@ public class ServletInscription extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(URL_JSP_INSCRIPTION).forward(request, response);
+		this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_INSCRIPTION).forward(request, response);
 
 		if (request.getParameter("cancel") != null) {
 			request.getRequestDispatcher("/accueil.jsp").forward(request, response);
@@ -49,7 +50,13 @@ public class ServletInscription extends HttpServlet {
 		UtilisateurManager um = new UtilisateurManager();
 
 		Utilisateur utilisateur = MapUtils.mapUtilisateur(request);
-		
+		try {
+		UtilisateurValidator.validationMotsDePasse(utilisateur.getMotDePasse(), MapUtils.getValeurChamp(request, MapUtils.CHAMP_CONF));
+		//TODO DTO
+		} catch (Exception ex) {
+			inscriptionException.setErreur(MapUtils.CHAMP_PWD, ex.getMessage());
+			inscriptionException.setErreur(MapUtils.CHAMP_CONF, null);
+		}
 		try {
 			um.saveNewOrExistingCompte(utilisateur);
 		} catch (SQLException e) {

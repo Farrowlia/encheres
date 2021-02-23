@@ -109,9 +109,11 @@
 										<form id="connection-form" class="form" action="ServletConnectionInscription?action=connectionUtilisateur" method="post">
 											<div class="form-group">
 												<input id="login" name="login" placeholder="pseudo/email" class="form-control" type="text">
+												<span class="erreur">${form.erreurs['login']}</span>
 											</div>
 											<div class="form-group">
-												<input id="password" name="password" placeholder="Mot de passe" class="form-control" type="password">
+												<input id="password" name="motdepasse" placeholder="Mot de passe" class="form-control" type="password">
+												<span class="erreur">${form.erreurs['password']}</span>
 											</div>
 											<div class="form-group">
 												<input name="btnSubmit" class="btn btn-lg btn-primary btn-block" value="Se connecter" type="submit">

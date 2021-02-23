@@ -9,6 +9,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.eni.encheres.authentification.Authentification;
+import org.eni.encheres.authentification.LoginException;
+import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.utils.MapUtils;
+import org.eni.encheres.utils.URL_JSP;
 
 /**
  * Servlet implementation class ServletAuthentification
@@ -16,7 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ServletAuthentification")
 public class ServletAuthentification extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
+	private static final String ATT_USER = "utilisateur";
+	private static final String ATT_FORM = "form";
+	private static final String ATT_SESSION_USER = "sessionUtilisateur";
+
+ 
 
 	/**
 	 * Récupérer le pseudo de l'utilisateur dans le formulaire de connexion
@@ -57,7 +69,19 @@ public class ServletAuthentification extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		Authentification auth = new Authentification();
+		HttpSession session = request.getSession();
+		try {
+			Utilisateur user = auth.login(MapUtils.getValeurChamp(request, MapUtils.CHAMP_LOGIN), MapUtils.getValeurChamp(request, MapUtils.CHAMP_PWD));
+			request.setAttribute(ATT_USER, user);
+			session.setAttribute(ATT_SESSION_USER, user);
+		} catch (LoginException loginException) {
+			request.setAttribute(ATT_FORM, loginException);
+			session.setAttribute(ATT_SESSION_USER, null);
+			this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION).forward(request, response);
+		}
+		this.getServletContext().getRequestDispatcher(URL_JSP.URL_ACCUEIL);
+		
 	}
 
 }

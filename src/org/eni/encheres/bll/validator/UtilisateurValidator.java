@@ -3,6 +3,7 @@ package org.eni.encheres.bll.validator;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.eni.encheres.authentification.InscriptionException;
@@ -14,6 +15,7 @@ public class UtilisateurValidator {
 
 	private static UtilisateurManager um = new UtilisateurManager();
 
+	
 	public static Utilisateur validateUtilisateur(Utilisateur utilisateur, InscriptionException inscriptionException)
 			throws SQLException {
 
@@ -49,13 +51,13 @@ public class UtilisateurValidator {
 			inscriptionException.setErreur(MapUtils.CHAMP_EMAIL, ex.getMessage());
 		}
 
-		try {
-			validationMotsDePasse(utilisateur.getMotDePasse(), MapUtils.getValeurChamp(request, MapUtils.CHAMP_CONF));
-		//TODO DTO
-		} catch (Exception ex) {
-			inscriptionException.setErreur(MapUtils.CHAMP_PWD, ex.getMessage());
-			inscriptionException.setErreur(MapUtils.CHAMP_CONF, null);
-		}
+//		try {
+//			validationMotsDePasse(utilisateur.getMotDePasse(), MapUtils.getValeurChamp(request, MapUtils.CHAMP_CONF));
+//		//TODO DTO
+//		} catch (Exception ex) {
+//			inscriptionException.setErreur(MapUtils.CHAMP_PWD, ex.getMessage());
+//			inscriptionException.setErreur(MapUtils.CHAMP_CONF, null);
+//		}
 
 		try {
 			validationTexte(utilisateur.getPseudo());
@@ -97,7 +99,7 @@ public class UtilisateurValidator {
 	/**
 	 * Valide les mots de passe saisis.
 	 */
-	private static void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
+	public static void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
 
 		if (motDePasse != null && confirmation != null) {
 			if (!motDePasse.equals(confirmation)) {
