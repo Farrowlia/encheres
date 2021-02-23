@@ -61,7 +61,7 @@ public class ServletAuthentification extends HttpServlet {
 		
 		request.setAttribute("cookieSeSouvenir", cookieSeSouvenir);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/formConnexion.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION);
 		rd.forward(request, response);
 	}
 
@@ -80,7 +80,7 @@ public class ServletAuthentification extends HttpServlet {
 			session.setAttribute(ATT_SESSION_USER, null);
 			this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION).forward(request, response);
 		}
-		this.getServletContext().getRequestDispatcher(URL_JSP.URL_ACCUEIL);
+		this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);;
 		
 	}
 

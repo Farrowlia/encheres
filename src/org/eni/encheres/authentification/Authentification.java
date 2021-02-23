@@ -7,12 +7,13 @@ import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
+import org.eni.encheres.dal.utilisateur.UtilisateurDAOJdbcImpl;
 import org.eni.encheres.erreur.BusinessException;
 import org.eni.encheres.utils.MapUtils;
 
 public class Authentification {
 	
-	private UtilisateurDAO userDAO;
+	private UtilisateurDAO userDAO = new UtilisateurDAOJdbcImpl();
 	
 	/**
 	 * Vérifier si un utilisateur est connecté
@@ -67,8 +68,7 @@ public class Authentification {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("erreur BDD");
 		}
 		return user;
 	}
