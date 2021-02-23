@@ -2,8 +2,6 @@ package org.eni.encheres.bll;
 
 import java.sql.SQLException;
 
-import org.eni.encheres.authentification.InscriptionException;
-import org.eni.encheres.bll.validator.UtilisateurValidator;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
@@ -21,12 +19,8 @@ public class UtilisateurManager {
 	}
 
 	
-	public void saveNewOrExistingCompte(Utilisateur utilisateur) throws SQLException, InscriptionException {
-		InscriptionException inscriptionException = new InscriptionException();
-		UtilisateurValidator.validateUtilisateur(utilisateur, inscriptionException);
-		if (inscriptionException.hasErreurs()) {
-			throw inscriptionException;
-		} 
+	public void saveNewOrExistingCompte(Utilisateur utilisateur) throws SQLException {
+
 		if (utilisateur.getNoUtilisateur() != 0) {
 			//si le compte est modifiable et modifié, enregistrer les modifs
 			userDAO.createOrUpdateUtilisateur(utilisateur);
@@ -93,22 +87,22 @@ public class UtilisateurManager {
 	
 	/**
 	 * supprimer le compte
-	 * @param id
+	 * @param utilisateur
 	 * @throws BusinessException
 	 * @throws SQLException 
 	 */
-	public void deleteCompte(int id) throws BusinessException, SQLException {
-		userDAO.deleteUtilisateur(id);
+	public void deleteCompte(Utilisateur utilisateur) throws BusinessException, SQLException {
+		userDAO.deleteUtilisateur(utilisateur);
 	}
 
 	public boolean isUserExistsByPseudo(String pseudo) throws SQLException {
 		
-		return userDAO.selectByPseudo(pseudo) != null;
+		return userDAO.selectByPseudo(pseudo.trim()) != null;
 	}
 	
 	public boolean isEmailExists(String email) throws SQLException {
 		
-		return userDAO.selectByEmail(email) != null;
+		return userDAO.selectByEmail(email.trim()) != null;
 	}
 	
 }

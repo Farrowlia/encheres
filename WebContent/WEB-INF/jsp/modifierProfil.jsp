@@ -7,7 +7,7 @@
 <title>Modifier Profil</title>
 </head>
 <body>
-<form method="post" action="modifier">
+<form method="post" action="${pageContext.request.contextPath}/ServletModifierProfil }">
             <fieldset>
                 <legend>Modifier Profil</legend>
                 
@@ -48,11 +48,11 @@
                 <br />
                 
               
-                <label for="confirmation">Confirmation du mot de passe <span class="requis">*</span></label>
-                <input type="password" id="confirmation" name="confirmation" value="" size="20" maxlength="20" />
+                <label for="newPassword">Nouveau mot de passe<span class="requis">*</span></label>
+                <input type="password" id="confirmation" name="newPassword" value="" size="20" maxlength="20" />
                 <br />
 
-                 <label for="confirmation">Nouveau mot de passe <span class="requis">*</span></label>
+                 <label for="confirmation"> Confirmation du mot de passe <span class="requis">*</span></label>
                 <input type="password" id="confirmation" name="confirmation" value="" size="20" maxlength="20" />
                 <br />
                 
@@ -61,7 +61,7 @@
                 <input type="submit" value="Enregistrer" class="sansLabel" />
                 <br />
                 
-                <input type="submit" value="Supprimer mon compte" class="sansLabel" />
+                <input type="submit" value="Supprimer mon compte" class="sansLabel" name="delete" />
                 <br />
             </fieldset>
         </form>

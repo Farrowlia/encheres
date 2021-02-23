@@ -2,19 +2,15 @@ package org.eni.encheres.servlets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.authentification.Authentification;
 import org.eni.encheres.authentification.LoginException;
-import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.utils.MapUtils;
 import org.eni.encheres.utils.URL_JSP;
 
 /**
@@ -24,9 +20,10 @@ import org.eni.encheres.utils.URL_JSP;
 public class ServletAuthentification extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final String ATT_USER = "utilisateur";
+
 	private static final String ATT_FORM = "form";
-	private static final String ATT_SESSION_USER = "sessionUtilisateur";
+
+	private static final String ATT_ISLOGIN = "isLogin";
 
  
 
@@ -61,8 +58,7 @@ public class ServletAuthentification extends HttpServlet {
 		
 		request.setAttribute("cookieSeSouvenir", cookieSeSouvenir);
 		
-		RequestDispatcher rd = request.getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION);
-		rd.forward(request, response);
+		request.getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION).forward(request, response);
 	}
 
 	/**
@@ -70,17 +66,19 @@ public class ServletAuthentification extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Authentification auth = new Authentification();
-		HttpSession session = request.getSession();
 		try {
-			Utilisateur user = auth.login(MapUtils.getValeurChamp(request, MapUtils.CHAMP_LOGIN), MapUtils.getValeurChamp(request, MapUtils.CHAMP_PWD));
-			request.setAttribute(ATT_USER, user);
-			session.setAttribute(ATT_SESSION_USER, user);
+			auth.login(request); //vérifie 
+//			je factorise ces 3 lignes
+//			Utilisateur user = auth.login(MapUtils.getValeurChamp(request, MapUtils.CHAMP_LOGIN), MapUtils.getValeurChamp(request, MapUtils.CHAMP_PWD));
+//			request.setAttribute(ATT_USER, user);
+//			session.setAttribute(ATT_SESSION_USER, user);
 		} catch (LoginException loginException) {
-			request.setAttribute(ATT_FORM, loginException);
-			session.setAttribute(ATT_SESSION_USER, null);
+			request.setAttribute(ATT_FORM, loginException); //renvoie les messages d'erreur dans le formulaire
+//			session.setAttribute(ATT_SESSION_USER, null); => inutile
+			request.setAttribute(ATT_ISLOGIN, true); //permet de conditionner le css dans la JSP
 			this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION).forward(request, response);
 		}
-		this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);;
+		this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);
 		
 	}
 

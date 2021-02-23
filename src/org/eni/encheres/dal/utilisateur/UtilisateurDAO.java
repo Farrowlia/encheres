@@ -4,11 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.erreur.BusinessException;
 
 public interface UtilisateurDAO {
 	public void createOrUpdateUtilisateur(Utilisateur utilisateur) throws SQLException;
-	public void deleteUtilisateur(int noUtilisateur) throws SQLException;
+	public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException;
 	public Utilisateur selectByPseudo(String pseudo) throws SQLException;
 	public Utilisateur selectByNom(String nom) throws SQLException;
 	public Utilisateur selectById(int noUtilisateur) throws SQLException;

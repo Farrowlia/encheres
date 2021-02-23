@@ -51,7 +51,7 @@
                 <br />
 
                 <input type="submit" value="Inscription" class="sansLabel" />
-                <input type="submit" value="Cancel" name="cancel">
+                <input type="reset" value="A" name="cancel">
                 <br />
 
             </fieldset>

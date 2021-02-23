@@ -33,7 +33,7 @@ public class MapUtils {
 		user.setPrenom(getValeurChamp(request, CHAMP_PRENOM));
 		user.setRue(getValeurChamp(request, CHAMP_RUE));
 		user.setVille(getValeurChamp(request, CHAMP_VILLE));
-		user.setTelephone(CHAMP_TELEPHONE);
+		user.setTelephone(getValeurChamp(request, CHAMP_TELEPHONE));
 		
 		return user;
 	}

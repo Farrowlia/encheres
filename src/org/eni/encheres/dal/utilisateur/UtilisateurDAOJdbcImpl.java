@@ -17,7 +17,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
 	private static final String INSERT_USER = "INSERT INTO utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, compte_actif) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SELECT_ALL= "SELECT * FROM utilisateurs";
-	private static final String SELECT_BY_CRITERIA = SELECT_ALL + "WHERE ? = ?";
+	private static final String SELECT_BY_CRITERIA = SELECT_ALL + " WHERE %s = ?";
 	private static final String SELECT_BY_NOM_OR_PSEUDO = "SELECT * FROM utilisateurs WHERE pseudo = ? OR email = ?";
 	private static final String SELECT_BY_ID = SELECT_ALL + " WHERE no_utilisateur = ?";
 	private static final String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?";
@@ -63,7 +63,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setBoolean(index++, utilisateur.isCompteActif());
 			
 			// si c'est une INSERT :
-			if (!userExists) {
+			if (userExists) {
 			pstmt.setInt(index++, utilisateur.getNoUtilisateur());
 			}
 			
@@ -75,11 +75,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void deleteUtilisateur(int noUtilisateur) throws SQLException {
+	public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = connexion.prepareStatement(DELETE_USER);
 			
-			pstmt.setInt(1, noUtilisateur);
+			pstmt.setInt(1, utilisateur.getNoUtilisateur());
 			pstmt.executeUpdate();
 			
 			pstmt.close();
@@ -175,13 +175,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 */
 	private Utilisateur selectByCriteria(Criteres critere, String value) throws SQLException {
 		Utilisateur utilisateur = null;
+		System.out.println(critere);
 		try (Connection connexion = ConnectionProvider.getConnection();
-				PreparedStatement pstmt = connexion.prepareStatement(SELECT_BY_CRITERIA);) {
+				PreparedStatement pstmt = connexion.prepareStatement(String.format(SELECT_BY_CRITERIA, critere.getNomColonne()))) {
 			//definir nom colonne (critere)
-			pstmt.setString(1, critere.getNomColonne());
+			//pstmt.setString(1, critere.getNomColonne());
 			//definir nom de la valeur � chercher
-			pstmt.setString(2, value);
-			
+			pstmt.setString(1, value);
+			System.out.println(critere.getNomColonne());
 			ResultSet rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
