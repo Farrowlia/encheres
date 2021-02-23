@@ -71,12 +71,12 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarAccueil">
                             <ul class="navbar-nav m-auto">
                                 <li class="nav-item"><a href="index.html">Accueil</a></li>
-                                <li class="nav-item"><a href="ServletRechercheArticle">Rechercher</a></li>
+                                <li class="nav-item"><a href="pageRechercheArticle.jsp">Rechercher</a></li>
                             </ul>
                         </div>
                         <div class="navbar-btn">
                             <ul>
-                                <li><a class="solid" href="ServletRedirection?redirection=pageConnectionInscription">Se connecter</a></li>
+                                <li><a class="solid" href="pageConnexionInscription.jsp">Se connecter</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -91,13 +91,12 @@
     </section>
     
     <!--====== FORM ======-->
-    
+
 	<section class="divers-area">
 		<div class="container search-form">
 			<div class="row justify-content-center">
 				<div class="panel-body col-lg-10">
-					<form id="search-form" class="form"
-						action="ServletRechercheArticle" method="post">
+					<form id="search-form" class="form" action="Servlet" method="post">
 						<!--====== Voir les attribut ======-->
 						<div class="row">
 							<div class="form-group col-lg-4 col-md-6">
@@ -123,12 +122,65 @@
 									value="Rechercher" type="submit">
 							</div>
 						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio"
+										name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="true"
+										onchange="verifyAnswer()"> <label class="form-check-label"
+										for="inlineRadio1">Achats</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1" checked="true"> <label
+										class="form-check-label" for="inlineCheckbox1">Enchères
+										ouvertes</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox2" value="option2"> <label
+										class="form-check-label" for="inlineCheckbox2">Mes
+										enchères</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox3" value="option3"> <label
+										class="form-check-label" for="inlineCheckbox3">Mes
+										enchères remportées</label>
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio"
+										name="inlineRadioOptions" id="inlineRadio2" value="option2" onchange="verifyAnswer()">
+									<label class="form-check-label" for="inlineRadio2">Ventes</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox4" value="option4" disabled> <label
+										class="form-check-label" for="inlineCheckbox4">Mes
+										ventes en cours</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox5" value="option5" disabled> <label
+										class="form-check-label" for="inlineCheckbox5">Ventes
+										non débutées</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox6" value="option6" disabled> <label
+										class="form-check-label" for="inlineCheckbox6" >Ventes
+										terminées</label>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</section>
-	
+
 	<!--====== SELECTION ARTICLES ======-->
 
     <section class="divers-area">
@@ -137,7 +189,7 @@
 
                 <div class="col-sm-12 col-md-6 col-lg-4"> <!-- article -->
                     <div class="row justify-content-center">
-                        <a href="ServletGestionArticle?noArticle=1">
+                        <a href="pageDetailsArticle.jsp">
                             <div class="article">
                                 <figure class="img-responsive">
                                     <img src="images/article-1.jpg">
@@ -161,7 +213,7 @@
 
                 <div class="col-sm-12 col-md-6 col-lg-4"> <!-- article -->
                     <div class="row justify-content-center">
-                        <a href="ServletGestionArticle?noArticle=2">
+                        <a href="pageDetailsArticle.jsp">
                             <div class="article">
                                 <figure class="img-responsive">
                                     <img src="images/article-1.jpg">
@@ -186,7 +238,7 @@
 
                 <div class="col-sm-12 col-md-6 col-lg-4"> <!-- article -->
                     <div class="row justify-content-center">
-                        <a href="ServletGestionArticle?noArticle=3">
+                        <a href="pageDetailsArticle.jsp">
                             <div class="article">
                                 <figure class="img-responsive">
                                     <img src="images/article-1.jpg">
@@ -211,7 +263,7 @@
                 
                 <div class="col-sm-12 col-md-6 col-lg-4"> <!-- article -->
                     <div class="row justify-content-center">
-                        <a href="ServletGestionArticle?noArticle=4">
+                        <a href="pageDetailsArticle.jsp">
                             <div class="article">
                                 <figure class="img-responsive">
                                     <img src="images/article-1.jpg">
@@ -264,7 +316,33 @@
     
 
     <!-- Javascript importés -->
-    <!--====== Jquery js ======-->
+	<script>
+		function verifyAnswer() {
+			if (document.getElementById("inlineRadio1").checked == true) {
+				document.getElementById("inlineCheckbox1").disabled = false;
+				document.getElementById("inlineCheckbox2").disabled = false;
+				document.getElementById("inlineCheckbox3").disabled = false;
+				document.getElementById("inlineCheckbox4").disabled = true;
+				document.getElementById("inlineCheckbox4").checked = false;
+				document.getElementById("inlineCheckbox5").disabled = true;
+				document.getElementById("inlineCheckbox5").checked = false;
+				document.getElementById("inlineCheckbox6").disabled = true;
+				document.getElementById("inlineCheckbox6").checked = false;
+			}
+			if (document.getElementById("inlineRadio2").checked == true) {
+				document.getElementById("inlineCheckbox1").disabled = true;
+				document.getElementById("inlineCheckbox1").checked = false;
+				document.getElementById("inlineCheckbox2").disabled = true;
+				document.getElementById("inlineCheckbox2").checked = false;
+				document.getElementById("inlineCheckbox3").disabled = true;
+				document.getElementById("inlineCheckbox3").checked = false;
+				document.getElementById("inlineCheckbox4").disabled = false;
+				document.getElementById("inlineCheckbox5").disabled = false;
+				document.getElementById("inlineCheckbox6").disabled = false;
+			}
+		}
+	</script>
+	<!--====== Jquery js ======-->
     <script src="js/vendor/jquery-1.12.4.min.js"></script>
     <script src="js/vendor/modernizr-3.7.1.min.js"></script>
     

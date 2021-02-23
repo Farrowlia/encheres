@@ -71,12 +71,12 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarAccueil">
                             <ul class="navbar-nav m-auto">
                                 <li class="nav-item"><a href="index.html">Accueil</a></li>
-                                <li class="nav-item"><a href="ServletRechercheArticle">Rechercher</a></li>
+                                <li class="nav-item"><a href="pageRechercheArticle.jsp">Rechercher</a></li>
                             </ul>
                         </div>
                         <div class="navbar-btn">
                             <ul>
-                                <li><a class="solid" href="ServletRedirection?redirection=pageConnectionInscription">Se connecter</a></li>
+                                <li><a class="solid" href="pageConnexionInscription.jsp">Se connecter</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -97,21 +97,20 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-8">
 					<div class="nav nav-tabs">
-						<a class="nav-item nav-link active" href="#p1" data-toggle="tab">Se
-							connecter</a> <a class="nav-item nav-link" href="#p2"
-							data-toggle="tab">S'inscrire</a>
+						<a class="nav-item nav-link active" href="#p1" data-toggle="tab">Se connecter</a>
+						<a class="nav-item nav-link" href="#p2" data-toggle="tab">S'inscrire</a>
 					</div>
 					<div class="tab-content">
-						<div class="tab-pane active" id="p1">
+						<div class="tab-pane active" id="p1"> <!-- Onglet Se Connecter -->
 							<div class="container">
 								<div class="row justify-content-center">
 									<div class="col-lg-8 register-form">
-										<form id="connection-form" class="form" action="ServletConnectionInscription?action=connectionUtilisateur" method="post">
+										<form id="connection-form" class="form" action="Servlet" method="post">
 											<div class="form-group">
-												<input id="login" name="login" placeholder="pseudo/email" class="form-control" type="text">
+												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text">
 											</div>
 											<div class="form-group">
-												<input id="password" name="password" placeholder="Mot de passe" class="form-control" type="password">
+												<input name="password" placeholder="Mot de passe" class="form-control" type="password">
 											</div>
 											<div class="form-group">
 												<input name="btnSubmit" class="btn btn-lg btn-primary btn-block" value="Se connecter" type="submit">
@@ -121,40 +120,40 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="p2">
+						<div class="tab-pane" id="p2"> <!-- Onglet S'inscrire -->
 							<div class="container">
 								<div class="row justify-content-center">
 									<div class="col-lg-8 register-form">
-										<form id="connection-form" class="form" action="ServletConnectionInscription?action=connectionUtilisateur" method="post">
+										<form id="connection-form" class="form" action="Servlet" method="post">
 											<div class="form-group">
-												<input id="pseudo" name="pseudo" placeholder="pseudo" class="form-control" type="text" required>
+												<input name="pseudo" placeholder="Pseudo" class="form-control" type="text" maxlength="30" required>
 											</div>
 											<div class="form-group">
-												<input id="nom" name="nom" placeholder="nom" class="form-control" type="text" required>
+												<input name="nom" placeholder="Nom" class="form-control" type="text" maxlength="30" required>
 											</div>
 											<div class="form-group">
-												<input id="prenom" name="prenom" placeholder="prenom" class="form-control" type="text" required>
+												<input name="prenom" placeholder="Prenom" class="form-control" type="text" maxlength="30" required>
 											</div>
 											<div class="form-group">
-												<input id="email" name="email" placeholder="email" class="form-control" type="email" required>
+												<input name="email" placeholder="Email" class="form-control" type="email" maxlength="50" required>
 											</div>
 											<div class="form-group">
-												<input id="telephone" name="telephone" placeholder="telephone" class="form-control" type="tel" required>
+												<input name="telephone" placeholder="Telephone" class="form-control" type="tel" maxlength="15" required>
 											</div>
 											<div class="form-group">
-												<input id=rue name="rue" placeholder="rue" class="form-control" type="text" required>
+												<input name="rue" placeholder="Rue" class="form-control" type="text" maxlength="50" required>
 											</div>
 											<div class="form-group">
-												<input id="codePostal" name="codePostal" placeholder="code postal" class="form-control" type="text" required>
+												<input name="codePostal" placeholder="Code postal" class="form-control" type="text" maxlength="10" required>
 											</div>
 											<div class="form-group">
-												<input id="ville" name="ville" placeholder="ville" class="form-control" type="text" required>
+												<input name="ville" placeholder="Ville" class="form-control" type="text" maxlength="30" required>
 											</div>
 											<div class="form-group">
-												<input id="password" name="password" placeholder="Mot de passe" class="form-control" type="password" required>
+												<input name="password" placeholder="Mot de passe" class="form-control" type="password" maxlength="30" required>
 											</div>
 											<div class="form-group">
-												<input id="confirmationPassword" name="confirmationPassword" placeholder="Confirmer Mot de Passe" class="form-control" type="password" required>
+												<input name="confirmationPassword" placeholder="Confirmer Mot de Passe" class="form-control" type="password" maxlength="30" required>
 											</div>
 											<div class="form-group">
 												<input name="btnSubmit" class="btn btn-lg btn-primary btn-block" value="S'inscrire" type="submit">
