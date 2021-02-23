@@ -1,13 +1,14 @@
 package org.eni.encheres.authentification;
 
-import javax.servlet.http.Cookie;
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
 import org.eni.encheres.erreur.BusinessException;
+import org.eni.encheres.utils.MapUtils;
 
 public class Authentification {
 	
@@ -16,7 +17,7 @@ public class Authentification {
 	/**
 	 * Vérifier si un utilisateur est connecté
 	 * @return true si user connecté
-	 * @throws BusinessException 
+	 * @throws BusinessException
 	 */
 	public Utilisateur authorize(HttpServletRequest request) throws BusinessException {
 	//verifie si user != null dans la session
@@ -44,25 +45,28 @@ public class Authentification {
 	 * @param login
 	 * @param pwd
 	 * @param request
+	 * @throws LoginException 
 	 */
-	public Utilisateur login(String login, String pwd) {
-		BusinessException businessException = new BusinessException();
+	public Utilisateur login(String login, String pwd) throws LoginException {
+		LoginException loginException = new LoginException();
 		//check si login et pwd existent dans la BDD et check mdp : avec selectByEmailOrPseudo
 		Utilisateur user=null;
 		try {
 			
 			user = userDAO.selectByEmailOrPseudo(login);
 			if(user == null) {
-				throw businessException;
+				loginException.setErreur(MapUtils.CHAMP_LOGIN, "Le pseudo ou email n'existe pas");
 			}
-			//le login (pseudo ou email) existe
+			//ok, le login (pseudo ou email) existe
 			if(!user.getMotDePasse().equals(pwd)) {
-				throw businessException;
+				loginException.setErreur(MapUtils.CHAMP_PWD, "Le mot de passe est incorrect");
 			}
-			//le pwd correspond au motDePasse enregistré en BDD
+			//ok, le pwd correspond au motDePasse enregistré en BDD
+			if (loginException.hasErreurs()) {
+				throw loginException;
+			}
 			
-			
-		} catch (BusinessException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

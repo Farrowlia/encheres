@@ -18,6 +18,8 @@ public class MapUtils {
 	public static final String CHAMP_VILLE = "ville";
 	public static final String CHAMP_PWD = "motdepasse";
 	public static final String CHAMP_CONF = "confirmation";
+	/* pour la connexion par email ou pseudo : */
+	public static final String CHAMP_LOGIN= "login";
 
 	public static Utilisateur mapUtilisateur(HttpServletRequest request) {
 		/* Récupération des champs du formulaire. */
