@@ -61,7 +61,7 @@
                 <input type="submit" value="Enregistrer" class="sansLabel" />
                 <br />
                 
-                <input type="submit" value="supprimermoncompte" class="sansLabel" />
+                <input type="submit" value="Supprimer mon compte" class="sansLabel" />
                 <br />
             </fieldset>
         </form>
