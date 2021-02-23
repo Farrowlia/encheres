@@ -71,12 +71,12 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarAccueil">
                             <ul class="navbar-nav m-auto">
                                 <li class="nav-item"><a href="index.html">Accueil</a></li>
-                                <li class="nav-item"><a href="ServletRechercheArticle">Rechercher</a></li>
+                                <li class="nav-item"><a href="pageRechercheArticle.jsp">Rechercher</a></li>
                             </ul>
                         </div>
                         <div class="navbar-btn">
                             <ul>
-                                <li><a class="solid" href="ServletRedirection?redirection=pageConnectionInscription">Se connecter</a></li>
+                                <li><a class="solid" href="pageConnexionInscription.jsp">Se connecter</a></li>
                             </ul>
                         </div>
                     </nav>

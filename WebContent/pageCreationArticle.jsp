@@ -161,7 +161,7 @@
 									<label for="dateDebutEncheres" class="col-2 col-form-label">Date
 										début enchère</label>
 									<div class="col-10">
-										<input class="form-control" type="date" value="2011-08-19"
+										<input class="form-control" type="date" value="2021-02-01"
 											id="dateDebutEncheres" name="dateDebutEncheres">
 									</div>
 								</div>
@@ -170,7 +170,7 @@
 									<label for="dateDebutEncheres" class="col-2 col-form-label">Date
 										fin enchère</label>
 									<div class="col-10">
-										<input class="form-control" type="date" value="2011-08-19"
+										<input class="form-control" type="date" value="2021-02-02"
 											id="dateDebutEncheres" name="dateDebutEncheres">
 									</div>
 								</div>
