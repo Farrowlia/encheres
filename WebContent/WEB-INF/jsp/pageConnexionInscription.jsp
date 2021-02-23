@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -105,16 +106,23 @@
 							<div class="container">
 								<div class="row justify-content-center">
 									<div class="col-lg-8 register-form">
-										<form id="connection-form" class="form" action="Servlet" method="post">
+										<form id="connection-form" class="form" action="${pageContext.request.contextPath}/ServletAuthentification" method="post">
 											<div class="form-group">
 												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text">
+												<span class="erreur">${form.erreurs['login']}</span>
 											</div>
 											<div class="form-group">
-												<input name="password" placeholder="Mot de passe" class="form-control" type="password">
+												<input name="motdepasse" placeholder="Mot de passe" class="form-control" type="password">
+												<span class="erreur">${form.erreurs['motdepasse']}</span>
 											</div>
 											<div class="form-group">
 												<input name="btnSubmit" class="btn btn-lg btn-primary btn-block" value="Se connecter" type="submit">
 											</div>
+											<%-- Vérification de la présence d'un objet utilisateur en session --%>
+						                	<c:if test="${!empty sessionScope.sessionUtilisateur}">
+						                    <%-- Si l'utilisateur existe en session, alors on affiche son adresse email. --%>
+						                    <p class="succes">Vous êtes connecté(e) avec l'adresse : ${sessionScope.sessionUtilisateur.email}</p>
+						                    </c:if>
 										</form>
 									</div>
 								</div>
@@ -124,7 +132,7 @@
 							<div class="container">
 								<div class="row justify-content-center">
 									<div class="col-lg-8 register-form">
-										<form id="connection-form" class="form" action="Servlet" method="post">
+										<form id="connection-form" class="form" action="${pageContext.request.contextPath}/ServletInscription" method="post">
 											<div class="form-group">
 												<input name="pseudo" placeholder="Pseudo" class="form-control" type="text" maxlength="30" required>
 											</div>

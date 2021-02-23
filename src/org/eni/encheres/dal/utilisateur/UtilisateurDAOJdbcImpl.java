@@ -130,6 +130,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs.close();
 			pstmt.close();
 			
+		} catch (SQLException e) {
+			System.out.println("erreur BDD");
+			//TODO faire qqch de ça
 		} 
 		return utilisateur;
 	}
