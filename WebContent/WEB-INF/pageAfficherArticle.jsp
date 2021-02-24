@@ -203,10 +203,15 @@
 					
 					
 					<div class="mt-3">
+						<c:if test="${sessionUtilisateur.noUtilisateur != articleVendu.utilisateur.noUtilisateur}">
 						<form id="search-form" class="form" action="NouvelleEnchere" method="post">
 						<input name="montantEnchere" type="number" value="${articleVendu.prixVente}" min="0" max="1000" step="10"/>
 						<input name="btnSubmit" class="btn btn-success" value="Enchérir" type="submit">
 						</form>
+						</c:if>
+						<c:if test="${sessionUtilisateur.noUtilisateur == articleVendu.utilisateur.noUtilisateur}">
+							<a class="solid" href="ModifierArticle">Modifier l'article</a>
+						</c:if>
 					</div>
 				</div>
 			</div>

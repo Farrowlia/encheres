@@ -56,7 +56,7 @@ public class ServletAfficherArticle extends HttpServlet {
 		
 		HttpSession session = request.getSession(); 
 		session.setAttribute("articleVendu", articleVendu);
-		request.setAttribute("retrait", retrait);
+		session.setAttribute("retrait", retrait);
 		request.setAttribute("listeImage", listeImage);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageAfficherArticle.jsp");
 		rd.forward(request, response);

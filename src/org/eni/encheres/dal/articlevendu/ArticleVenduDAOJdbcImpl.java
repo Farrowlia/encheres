@@ -178,9 +178,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			PreparedStatement pstmt;
 			if (categorie.getNoCategorie() == 0) {
 				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_KEY + finRequeteSQL);
-				if (!finRequeteSQL.equals(";")) {
-					pstmt.setString(1, keyword);
-				}
+					if (!finRequeteSQL.equals(";")) {
+						pstmt.setString(1, keyword);
+					}
 			}
 			else {
 				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_CATandKEY + finRequeteSQL2);
