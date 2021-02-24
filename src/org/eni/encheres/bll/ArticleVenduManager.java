@@ -87,6 +87,10 @@ private ArticleVenduDAO articleVenduDAO;
 		if (articleVendu.getPrixInitial() < 0) {
 			exeption.ajouterErreur(CodesResultatBLL.REGLE_PRIX_INITIAL_ARTICLE_ERREUR);
 		}
+		
+		if (articleVendu.getPrixVente() < 0) {
+			exeption.ajouterErreur(CodesResultatBLL.REGLE_PRIX_VENTE_ARTICLE_ERREUR);
+		}
 	}
 
 }

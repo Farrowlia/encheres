@@ -156,7 +156,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return listeArticleVendu;
 	}
 
-	// TODO selectArticleVendu par mot-clé
 	@Override
 	public List<ArticleVendu> selectArticleVendu(Categorie categorie, String keyword) throws BusinessException {
 		List<ArticleVendu> listeArticleVendu = new ArrayList<>();
@@ -166,31 +165,41 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			String finRequeteSQL2 = "";
 			if (keyword == null || keyword.equals("")) {
 				finRequeteSQL = ";";
+				finRequeteSQL2 = ";";
 			}
 			else {
 				keyword = "%" + keyword + "%";
 				finRequeteSQL = " WHERE nom_article LIKE ?;";
+				finRequeteSQL2 = " AND nom_article LIKE ?;";
 			}
 			
 			PreparedStatement pstmt;
 			if (categorie.getNoCategorie() == 0) {
 				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_KEY + finRequeteSQL);
-				pstmt.setString(1, keyword);
+				if (!finRequeteSQL.equals(";")) {
+					pstmt.setString(1, keyword);
+				}
 			}
 			else {
-				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_CATandKEY + "AND nom_article LIKE ?;");
-				pstmt.setInt(1, categorie.getNoCategorie());
-				pstmt.setString(2, keyword);
+				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_CATandKEY + finRequeteSQL2);
+					if (!finRequeteSQL2.equals(";")) {
+						pstmt.setInt(1, categorie.getNoCategorie());
+						pstmt.setString(2, keyword);
+					}
 			}
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				Utilisateur utilisateur = new Utilisateur();
-				ArticleVendu articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),
+				Utilisateur utilisateur1 = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"),
+						rs.getBoolean("administrateur"), rs.getBoolean("compte_actif"));
+				Categorie categorie1 = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+				ArticleVendu articleVendu1 = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),
 						rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
-						rs.getInt("prix_vente"), rs.getString("etat_vente"), utilisateur, categorie);
+						rs.getInt("prix_vente"), rs.getString("etat_vente"), utilisateur1, categorie1);
 				
-				listeArticleVendu.add(articleVendu);
+				listeArticleVendu.add(articleVendu1);
 			}
 			rs.close();
 			pstmt.close();

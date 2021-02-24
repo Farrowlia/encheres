@@ -19,8 +19,8 @@ import org.eni.encheres.erreur.BusinessException;
 /**
  * Servlet implementation class afficherListeArticle
  */
-@WebServlet("/RechercheArticle")
-public class ServletRechercheArticle extends HttpServlet {
+@WebServlet("/RechercheArticles")
+public class ServletRechercheArticles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -50,7 +50,7 @@ public class ServletRechercheArticle extends HttpServlet {
 			
 			request.setAttribute("listeArticleVendu", listeArticleVendu);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageRechercheArticle.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageRechercheArticles.jsp");
 			rd.forward(request, response);
 	}
 
