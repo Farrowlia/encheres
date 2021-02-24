@@ -17,16 +17,14 @@ public class FormulaireNouvelleVente {
 
 	private static final String CHAMP_ARTICLE			= "nomArticle";
 	private static final String	CHAMP_DESCRIPTION		= "description";
-	private static final String CHAMP_CATEGORIE			= "libelle";
-	private static final String CHAMP_PHOTO				= "photo";
+	private static final String CHAMP_CATEGORIE			= "categorie";
+	private static final String CHAMP_PHOTO				= "cheminUrl";
 	private static final String CHAMP_PRIX				= "prixInitial";
-	private static final String CHAMP_DEBUT_ENCHERE		= "dateDebutEnchere";
-	private static final String CHAMP_FIN_ENCHERE		= "dateFinEnchere";
+	private static final String CHAMP_DEBUT_ENCHERE		= "dateDebutEncheres";
+	private static final String CHAMP_FIN_ENCHERE		= "dateFinEncheres";
 	private static final String CHAMP_RUE				= "rue";
 	private static final String CHAMP_CODE_POSTAL		= "codePostal";
 	private static final String CHAMP_VILLE				= "ville";
-	
-	//private static final int NO_UTILISATEUR = 0;	
 	
 	
 	
@@ -38,7 +36,6 @@ public class FormulaireNouvelleVente {
 		
 		String debutEnchere = getValeurChamp(request, CHAMP_DEBUT_ENCHERE);
 		String finEnchere = getValeurChamp(request, CHAMP_FIN_ENCHERE);
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
         HttpSession session = request.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute("sessionUtilisateur");
@@ -47,8 +44,8 @@ public class FormulaireNouvelleVente {
         
         articleVendu.setNomArticle(getValeurChamp( request, CHAMP_ARTICLE));
         articleVendu.setDescription(getValeurChamp(request, CHAMP_DESCRIPTION));
-        articleVendu.setDateDebutEncheres(LocalDate.parse(debutEnchere, dateFormat));
-        articleVendu.setDateFinEncheres(LocalDate.parse(finEnchere, dateFormat));
+        articleVendu.setDateDebutEncheres(LocalDate.parse(debutEnchere));
+        articleVendu.setDateFinEncheres(LocalDate.parse(finEnchere));
         articleVendu.setPrixInitial(Integer.parseInt(getValeurChamp(request, CHAMP_PRIX)));
         articleVendu.setCategorie(categorie);
         articleVendu.setUtilisateur(utilisateur);
