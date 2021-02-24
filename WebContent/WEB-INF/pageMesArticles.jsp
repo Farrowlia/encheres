@@ -178,7 +178,7 @@
 								<input name="btnSubmit" class="btn btn-lg btn-primary btn-block"
 									value="Rechercher" type="submit">
 							</div>
-							<a class="solid" href="CreationArticle">Créer une nouvelle vente</a>
+							<a class="solid" href="NouvelleVente">Créer une nouvelle vente</a>
 						</div>
 					</form>
 				</div>
