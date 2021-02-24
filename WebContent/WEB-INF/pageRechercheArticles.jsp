@@ -130,7 +130,7 @@
                                     <img src="images/article-1.jpg">
                                     <figcaption>
                                         <span class="article-titre">${articleVendu.nomArticle}</span>
-                                        <span class="article-prix"><strong>${articleVendu.prixInitial} $</strong></span>
+                                        <span class="article-prix"><strong>${articleVendu.prixVente} $</strong></span>
                                         <!-- <span class="article-ville">${articleVendu.etatVente}</span> -->
                                         <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
                                             <p class="small mb-0"><i class="fa fa-picture-o mr-2"></i><span class="font-weight-bold">Termine dans</span></p>

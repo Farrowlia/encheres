@@ -55,6 +55,7 @@ public class ServletNouvelleEnchere extends HttpServlet {
 		
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		articleVendu.setPrixVente((Integer.parseInt(request.getParameter("montantEnchere"))));
+		System.out.println(articleVendu.getPrixVente());
 		articleVenduManager.updateArticleVendu(articleVendu);
 			
         } catch (BusinessException ex) {
