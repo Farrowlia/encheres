@@ -1,4 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="org.eni.encheres.erreur.LecteurMessage"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,11 +11,11 @@
 
 <!-- SEO Meta Tags -->
 <meta name="description"
-	content="Redecouvrez les enchËres avec une pointe d'Èthique.">
+	content="Redecouvrez les ench√®res avec une pointe d'√©thique.">
 <!-- Description du site -->
 <meta name="author" content="ENIGroupeC">
 <meta name="robots" content="index,follow" />
-<!-- Autorise les moteurs de recherche ‡ indexer la page -->
+<!-- Autorise les moteurs de recherche √† indexer la page -->
 <link rel="canonical" href="http://www.enchereeni.fr/index.html" />
 <!-- Adresse canonique du site -->
 
@@ -22,7 +25,7 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Enchere ENI" />
 <meta property="og:description"
-	content="Redecouvrez les enchËres avec une pointe d'Èthique." />
+	content="Redecouvrez les ench√®res avec une pointe d'√©thique." />
 <meta property="og:image" content="images/logo-vert.png" />
 <meta property="og:url" content="http://www.enchereeni.fr/index.html" />
 <meta property="og:type" content="website" />
@@ -30,7 +33,7 @@
 <!-- Titre du site -->
 <title>Enchere ENI - Connexion</title>
 
-<!-- Styles importÈs -->
+<!-- Styles import√©s -->
 <link rel="stylesheet" href="css/lineicons.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
@@ -63,38 +66,53 @@
 	<!--====== MENU ======-->
 
 	<section class="navbar-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<nav class="navbar navbar-expand-lg">
-						<a class="navbar-brand" href="index.html"> <img
-							src="images/logo-blanc.png" alt="Logo">
-						</a>
-						<button class="navbar-toggler" type="button"
-							data-toggle="collapse" data-target="#navbarAccueil"
-							aria-controls="navbarAccueil" aria-expanded="false"
-							aria-label="Toggle navigation">
-							<span class="toggler-icon"></span> <span class="toggler-icon"></span>
-							<span class="toggler-icon"></span>
-						</button>
-						<div class="collapse navbar-collapse sub-menu-bar"
-							id="navbarAccueil">
-							<ul class="navbar-nav m-auto">
-								<li class="nav-item"><a href="index.html">Accueil</a></li>
-								<li class="nav-item"><a href="pageRechercheArticle.jsp">Rechercher</a></li>
-							</ul>
-						</div>
-						<div class="navbar-btn">
-							<ul>
-								<li><a class="solid" href="pageConnexionInscription.jsp">Se
-										connecter</a></li>
-							</ul>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="index.jsp">
+                            <img src="images/logo-blanc.png" alt="Logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAccueil" aria-controls="navbarAccueil" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarAccueil">
+                            <ul class="navbar-nav m-auto">
+                                <li class="nav-item"><a href="index.jsp">Accueil</a></li>
+                                <li class="nav-item"><a href="#">Rechercher</a></li>
+                            </ul>
+                        </div>
+                        <div class="navbar-btn">
+                            <ul>
+                                <li>
+                                	<c:set var="sessionUtilisateur" value="${sessionUtilisateur}"/>
+									<c:if test="${sessionUtilisateur != null}">
+										<div class="dropdown">
+											<a class="solid dropdown-toggle" href="#"
+												role="button" id="dropdownMenuLink" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">${sessionUtilisateur.prenom}
+												</a>
+
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+												<a class="dropdown-item text-dark" href="ModifierProfil">Mon profil</a>
+												<a class="dropdown-item text-dark" href="MesArticles">Mes articles</a>
+												<a class="dropdown-item text-dark" href="Deconnexion">Se d√©connecter</a>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${sessionUtilisateur == null}">
+										<a class="solid" href="Authentification">Se connecter</a>
+									</c:if>
+								</li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
 
 	<!--====== HEADER ======-->
 
@@ -119,15 +137,15 @@
 								<div class="row justify-content-center">
 									<div class="col-lg-8 register-form">
 										<form id="connection-form" class="form"
-											action="${pageContext.request.contextPath}/ServletAuthentification"
+											action="${pageContext.request.contextPath}/Authentification"
 											method="post">
 											<div class="form-group">
-												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text"> 
+												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text" required> 
 												<span class="erreur">${form.erreurs['login']}</span>
 											</div>
 											<div class="form-group">
 												<input name="motdepasse" placeholder="Mot de passe"
-													class="form-control" type="password"> <span
+													class="form-control" type="password" required> <span
 													class="erreur">${form.erreurs['motdepasse']}</span>
 											</div>
 											<div class="form-group">
@@ -146,7 +164,7 @@
 								<div class="row justify-content-center">
 									<div class="col-lg-8 register-form">
 										<form id="connection-form" class="form"
-											action="${pageContext.request.contextPath}/ServletInscription"
+											action="${pageContext.request.contextPath}/Inscription"
 											method="post">
 											<div class="form-group">
 												<input name="pseudo" placeholder="Pseudo"
@@ -225,7 +243,7 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-6">
 					<div class="footer-logo text-center">
-						<a class="mt-30" href="index.html"><img
+						<a class="mt-30" href="index.jsp"><img
 							src="images/logo-blanc.png" alt="Logo"></a>
 					</div>
 					<ul class="social text-center mt-60">
@@ -243,7 +261,7 @@
 	</section>
 
 
-	<!-- Javascript importÈs -->
+	<!-- Javascript import√©s -->
 	<!--====== Jquery js ======-->
 	<script src="js/vendor/jquery-1.12.4.min.js"></script>
 	<script src="js/vendor/modernizr-3.7.1.min.js"></script>

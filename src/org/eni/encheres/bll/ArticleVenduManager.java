@@ -61,6 +61,10 @@ private ArticleVenduDAO articleVenduDAO;
 		return articleVenduDAO.selectArticleVendu(categorie, keyword);
 	}
 	
+	public ArticleVendu selectArticleVenduById(int noArticle) throws BusinessException {
+		return articleVenduDAO.selectArticleVenduById(noArticle);
+	}
+	
 	private void valider(ArticleVendu articleVendu, BusinessException exeption) {
 		articleVendu.setNomArticle(articleVendu.getNomArticle().trim());
 		if (articleVendu.getNomArticle() == null || articleVendu.getNomArticle().equals("") || articleVendu.getNomArticle().length() > 30) {
