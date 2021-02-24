@@ -21,6 +21,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_ARTICLE_VENDU_BY_VENTE_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie WHERE art.no_utilisateur = ? ORDER BY no_article DESC;";
 	private static final String SELECT_ARTICLE_VENDU_BY_ACHAT_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN ENCHERES AS ench ON art.no_article = ench.no_article WHERE ench.no_utilisateur = ? ORDER BY montant_enchere DESC;";
 	private static final String SELECT_ARTICLE_VENDU_BY_RECHERCHE = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS user ON art.no_utilisateur = user.no_utilisateur";
+	private static final String SELECT_ARTICLE_VENDU_BY_ID = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS util ON art.no_utilisateur = util.no_utilisateur WHERE no_article = ?;";
 
 	@Override
 	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
@@ -191,6 +192,36 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			throw exception;
 		}
 		return listeArticleVendu;
+	}
+
+	@Override
+	public ArticleVendu selectArticleVenduById(int noArticle) throws BusinessException {
+		ArticleVendu articleVendu = new ArticleVendu();
+		
+		try (Connection connexion = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_ID);) {
+			
+			pstmt.setInt(1, noArticle);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+														rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+														rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"),
+														rs.getBoolean("administrateur"), rs.getBoolean("compte_actif"));
+				Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+				articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),
+												rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
+												rs.getInt("prix_vente"), rs.getString("etat_vente"), utilisateur, categorie);
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException exception = new BusinessException();
+			exception.ajouterErreur(CodesResultatArticleVenduDAL.SELECT_ARTICLE_VENDU_ERREUR);
+			throw exception;
+		}
+		return articleVendu;
 	}
 	
 }

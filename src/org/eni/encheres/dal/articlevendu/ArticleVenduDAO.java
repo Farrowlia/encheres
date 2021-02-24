@@ -18,5 +18,6 @@ public interface ArticleVenduDAO {
 	public List<ArticleVendu> selectArticleVenduByVenteUtilisateur(Utilisateur utilisateur) throws BusinessException;
 	public List<ArticleVendu> selectArticleVenduByAchatUtilisateur(Utilisateur utilisateur) throws BusinessException;
 	public List<ArticleVendu> selectArticleVendu(Categorie categorie, String keyword) throws BusinessException;
+	public ArticleVendu selectArticleVenduById(int noArticle) throws BusinessException;
 
 }

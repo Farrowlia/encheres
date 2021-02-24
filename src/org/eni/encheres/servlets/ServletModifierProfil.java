@@ -3,20 +3,23 @@ package org.eni.encheres.servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.authentification.Authentification;
 import org.eni.encheres.bll.UtilisateurManager;
+import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.erreur.BusinessException;
 
 /**
  * Servlet implementation class ServletModifierProfil
  */
-@WebServlet("/ServletModifierProfil")
+@WebServlet("/ModifierProfil")
 public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,8 +28,8 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageMonProfil.jsp");
+			rd.forward(request, response);
 	}
 
 	/**
@@ -34,7 +37,7 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Supprimer le compte
-		if(request.getParameter("delete") != null) {
+		if(request.getParameter("action").equals("delete")) {
 		Authentification authentification = new Authentification();
 			if (authentification.authorize(request)) {
 				UtilisateurManager um = new UtilisateurManager();
@@ -47,6 +50,37 @@ public class ServletModifierProfil extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		}
+		
+		if (request.getParameter("action").equals("update")) {
+			request.setCharacterEncoding("UTF-8");
+			HttpSession session = request.getSession();
+			
+			Utilisateur utilisateur = (Utilisateur)session.getAttribute("sessionUtilisateur");
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+			
+			if (request.getParameter("motDePasse").equals(request.getParameter("confirmationMotDePasse"))) {
+				try {
+					utilisateur.setPseudo(request.getParameter("pseudo"));
+					utilisateur.setNom(request.getParameter("nom"));
+					utilisateur.setPrenom(request.getParameter("prenom"));
+					utilisateur.setEmail(request.getParameter("email"));
+					utilisateur.setTelephone(request.getParameter("telephone"));
+					utilisateur.setRue(request.getParameter("rue"));
+					utilisateur.setCodePostal(request.getParameter("codePostal"));
+					utilisateur.setVille(request.getParameter("ville"));
+					utilisateur.setMotDePasse(request.getParameter("motDePasse"));
+					utilisateurManager.saveNewOrExistingCompte(utilisateur);
+					
+				} catch (BusinessException | SQLException e) {
+					request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+				}
+				
+				session.setAttribute("sessionUtilisateur", utilisateur);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+				rd.forward(request, response);
 			}
 		}
 	}

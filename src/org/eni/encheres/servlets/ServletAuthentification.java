@@ -16,7 +16,7 @@ import org.eni.encheres.utils.URL_JSP;
 /**
  * Servlet implementation class ServletAuthentification
  */
-@WebServlet("/ServletAuthentification")
+@WebServlet("/Authentification")
 public class ServletAuthentification extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
