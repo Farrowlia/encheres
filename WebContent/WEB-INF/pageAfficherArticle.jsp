@@ -203,8 +203,8 @@
 					
 					
 					<div class="mt-3">
-						<form id="search-form" class="form" action="CreationEnchere" method="post">
-						<input type="number" value="9" min="0" max="1000" step="10"/>
+						<form id="search-form" class="form" action="NouvelleEnchere" method="post">
+						<input name="montantEnchere" type="number" value="${articleVendu.prixVente}" min="0" max="1000" step="10"/>
 						<input name="btnSubmit" class="btn btn-success" value="Enchérir" type="submit">
 						</form>
 					</div>

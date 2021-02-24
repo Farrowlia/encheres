@@ -1,8 +1,6 @@
 package org.eni.encheres.bll;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -47,6 +45,7 @@ public class FormulaireNouvelleVente {
         articleVendu.setDateDebutEncheres(LocalDate.parse(debutEnchere));
         articleVendu.setDateFinEncheres(LocalDate.parse(finEnchere));
         articleVendu.setPrixInitial(Integer.parseInt(getValeurChamp(request, CHAMP_PRIX)));
+        articleVendu.setPrixVente((Integer.parseInt(getValeurChamp(request, CHAMP_PRIX))));
         articleVendu.setCategorie(categorie);
         articleVendu.setUtilisateur(utilisateur);
         

@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.ArticleVenduManager;
 import org.eni.encheres.bll.ImageManager;
@@ -53,7 +54,8 @@ public class ServletAfficherArticle extends HttpServlet {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
 		
-		request.setAttribute("articleVendu", articleVendu);
+		HttpSession session = request.getSession(); 
+		session.setAttribute("articleVendu", articleVendu);
 		request.setAttribute("retrait", retrait);
 		request.setAttribute("listeImage", listeImage);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageAfficherArticle.jsp");
