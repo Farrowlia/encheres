@@ -122,9 +122,8 @@
 											action="${pageContext.request.contextPath}/ServletAuthentification"
 											method="post">
 											<div class="form-group">
-												<input name="login" placeholder="Pseudo/Email"
-													class="form-control" type="text"> <span
-													class="erreur">${form.erreurs['login']}</span>
+												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text"> 
+												<span class="erreur">${form.erreurs['login']}</span>
 											</div>
 											<div class="form-group">
 												<input name="motdepasse" placeholder="Mot de passe"
