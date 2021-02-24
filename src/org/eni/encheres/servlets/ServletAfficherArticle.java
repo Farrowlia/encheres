@@ -45,7 +45,7 @@ public class ServletAfficherArticle extends HttpServlet {
 			listeImage = imageManager.selectImage(articleVendu);
 			
 			if (listeImage.size() == 0) {
-				image.setCheminUrl("images/image_indisponible.png");
+				image.setCheminUrl("images/image-indisponible.png");
 				listeImage.add(image);
 			}
 			
