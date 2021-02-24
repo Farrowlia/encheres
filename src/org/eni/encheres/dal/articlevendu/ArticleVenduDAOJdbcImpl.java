@@ -16,7 +16,7 @@ import org.eni.encheres.erreur.BusinessException;
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	
 	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, etat_vente, no_utilisateur, no_categorie) VALUES(?,?,?,?,?,?,?,?);";
-	private static final String UPDATE_ARTICLE_VENDU = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, etat_vente = ?, no_categorie = ? WHERE no_article = ?;";
+	private static final String UPDATE_ARTICLE_VENDU = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_vente = ?, no_categorie = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 	private static final String SELECT_ARTICLE_VENDU_BY_VENTE_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie WHERE art.no_utilisateur = ? ORDER BY no_article DESC;";
 	private static final String SELECT_ARTICLE_VENDU_BY_ACHAT_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN ENCHERES AS ench ON art.no_article = ench.no_article WHERE ench.no_utilisateur = ? ORDER BY montant_enchere DESC;";
@@ -64,9 +64,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmtArticle.setDate(3, java.sql.Date.valueOf(articleVendu.getDateDebutEncheres()));
 			pstmtArticle.setDate(4, java.sql.Date.valueOf(articleVendu.getDateFinEncheres()));
 			pstmtArticle.setInt(5, articleVendu.getPrixInitial());
-			pstmtArticle.setString(6, articleVendu.getEtatVente());
-			pstmtArticle.setInt(7, articleVendu.getCategorie().getNoCategorie());
-			pstmtArticle.setInt(8, articleVendu.getNoArticle());
+			pstmtArticle.setInt(6, articleVendu.getPrixInitial());
+			pstmtArticle.setString(7, articleVendu.getEtatVente());
+			pstmtArticle.setInt(8, articleVendu.getCategorie().getNoCategorie());
+			pstmtArticle.setInt(9, articleVendu.getNoArticle());
 			pstmtArticle.executeUpdate();
 			
 		} catch (SQLException e) {

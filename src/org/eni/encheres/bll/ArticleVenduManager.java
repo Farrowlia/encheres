@@ -34,11 +34,12 @@ private ArticleVenduDAO articleVenduDAO;
 	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException {
 		BusinessException exception = new BusinessException();
 		valider(articleVendu, exception);
-		
+		System.out.println("1");
 		if (exception.hasErreurs()) {
 			throw exception;
 		}
 		else {
+			System.out.println("1");
 			articleVenduDAO.updateArticleVendu(articleVendu);
 		}
 	}

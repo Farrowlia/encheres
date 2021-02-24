@@ -44,7 +44,6 @@ public class ServletNouvelleEnchere extends HttpServlet {
 		
 		HttpSession session = request.getSession();
         Utilisateur utilisateur = (Utilisateur)session.getAttribute("sessionUtilisateur");
-        
         ArticleVendu articleVendu = (ArticleVendu)session.getAttribute("articleVendu");
         
 		enchere.setDateEnchere(LocalDate.now());
@@ -56,7 +55,6 @@ public class ServletNouvelleEnchere extends HttpServlet {
 		
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		articleVendu.setPrixVente((Integer.parseInt(request.getParameter("montantEnchere"))));
-		
 		articleVenduManager.updateArticleVendu(articleVendu);
 			
         } catch (BusinessException ex) {
@@ -67,6 +65,5 @@ public class ServletNouvelleEnchere extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageMesArticles.jsp");
         rd.forward(request, response);
     }
-	}
 
-
+}

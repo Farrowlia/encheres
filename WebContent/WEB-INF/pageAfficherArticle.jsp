@@ -149,7 +149,7 @@
 				<div class="col-lg-5 col-md-12">
 					<h4>${articleVendu.nomArticle}</h4>
 					<div class="price">
-						<span class="text-success">${articleVendu.prixInitial} $</span>
+						<span class="text-success">${articleVendu.prixVente} $</span>
 					</div>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
 						<span class="font-weight-bold">Description :</span><span
