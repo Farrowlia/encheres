@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Image;
 import org.eni.encheres.bo.Retrait;
+import org.eni.encheres.bo.Utilisateur;
 
 public class FormulaireNouvelleVente {
 
@@ -37,6 +39,9 @@ public class FormulaireNouvelleVente {
 		String debutEnchere = getValeurChamp(request, CHAMP_DEBUT_ENCHERE);
 		String finEnchere = getValeurChamp(request, CHAMP_FIN_ENCHERE);
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        
+        HttpSession session = request.getSession();
+        Utilisateur utilisateur = (Utilisateur)session.getAttribute("sessionUtilisateur");
 		
         ArticleVendu articleVendu = new ArticleVendu();
         
@@ -46,6 +51,7 @@ public class FormulaireNouvelleVente {
         articleVendu.setDateFinEncheres(LocalDate.parse(finEnchere, dateFormat));
         articleVendu.setPrixInitial(Integer.parseInt(getValeurChamp(request, CHAMP_PRIX)));
         articleVendu.setCategorie(categorie);
+        articleVendu.setUtilisateur(utilisateur);
         
 		return articleVendu;
 	}
