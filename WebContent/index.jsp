@@ -133,7 +133,7 @@
                                         <div class="col-lg-12">
                                             <div class="panel-body">
                                                 <div class="text-center">
-                                                    <form id="search-form" class="form" action="Servlet" method="post">
+                                                    <form id="search-form" class="form" action="RechercheArticle" method="post">
                                                         <div class="form-group">
                                                         	<input class="form-control" name="keyword" placeholder="Que recherchez-vous ?" type="text">
                                                         </div>

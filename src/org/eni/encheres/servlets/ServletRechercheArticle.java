@@ -19,8 +19,8 @@ import org.eni.encheres.erreur.BusinessException;
 /**
  * Servlet implementation class afficherListeArticle
  */
-@WebServlet("/ServletAfficherListeArticle")
-public class ServletAfficherListeArticle extends HttpServlet {
+@WebServlet("/RechercheArticle")
+public class ServletRechercheArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -34,13 +34,13 @@ public class ServletAfficherListeArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
-		if (request.getSession().getAttribute("utilisateur") == null) {
-			
 			List<ArticleVendu> listeArticleVendu = new ArrayList<>();
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			Categorie categorie = new Categorie();
 			categorie.setNoCategorie(Integer.parseInt(request.getParameter("categorie")));
+			
 			try {
 				listeArticleVendu = articleVenduManager.selectArticleVendu(categorie, request.getParameter("keyword"));
 				
@@ -52,13 +52,6 @@ public class ServletAfficherListeArticle extends HttpServlet {
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageRechercheArticle.jsp");
 			rd.forward(request, response);
-			
-		}
-		else {
-			
-		}
-		
-		
 	}
 
 }
