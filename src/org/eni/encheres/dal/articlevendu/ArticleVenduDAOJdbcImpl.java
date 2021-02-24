@@ -20,7 +20,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 	private static final String SELECT_ARTICLE_VENDU_BY_VENTE_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie WHERE art.no_utilisateur = ? ORDER BY no_article DESC;";
 	private static final String SELECT_ARTICLE_VENDU_BY_ACHAT_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN ENCHERES AS ench ON art.no_article = ench.no_article WHERE ench.no_utilisateur = ? ORDER BY montant_enchere DESC;";
-	private static final String SELECT_ARTICLE_VENDU_BY_RECHERCHE = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS user ON art.no_utilisateur = user.no_utilisateur";
+	private static final String SELECT_ARTICLE_VENDU_BY_CATandKEY = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS util ON art.no_utilisateur = util.no_utilisateur WHERE cat.no_categorie = ?";
+	private static final String SELECT_ARTICLE_VENDU_BY_KEY = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS util ON art.no_utilisateur = util.no_utilisateur WHERE";
 	private static final String SELECT_ARTICLE_VENDU_BY_ID = "SELECT * FROM ARTICLES_VENDUS AS art INNER JOIN CATEGORIES AS cat ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS util ON art.no_utilisateur = util.no_utilisateur WHERE no_article = ?;";
 
 	@Override
@@ -167,11 +168,19 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			}
 			else {
 				keyword = "%" + keyword + "%";
-				finRequeteSQL = " WHERE nom_article LIKE ?;";
+				finRequeteSQL = " nom_article LIKE ?;";
 			}
 			
-			PreparedStatement pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_RECHERCHE + finRequeteSQL);
-			pstmt.setString(1, keyword);
+			PreparedStatement pstmt;
+			if (categorie.getNoCategorie() == 0) {
+				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_KEY + finRequeteSQL);
+				pstmt.setString(1, keyword);
+			}
+			else {
+				pstmt = connexion.prepareStatement(SELECT_ARTICLE_VENDU_BY_CATandKEY + finRequeteSQL);
+				pstmt.setInt(1, categorie.getNoCategorie());
+				pstmt.setString(2, keyword);
+			}
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

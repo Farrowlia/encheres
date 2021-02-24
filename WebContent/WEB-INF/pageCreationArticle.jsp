@@ -131,7 +131,7 @@
 
 
 					<form id="connection-form" class="form"
-						action="CreationArticle" method="post">
+						action="NouvelleVente" method="post">
 
 						<div class="row justify-content-center">
 
