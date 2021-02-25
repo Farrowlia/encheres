@@ -30,7 +30,8 @@ public class ServletModifierArticle extends HttpServlet {
        
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageModifierArticle.jsp");
+        rd.forward(request, response);
 	}
 
 	
@@ -54,6 +55,7 @@ public class ServletModifierArticle extends HttpServlet {
 			articleVendu.setNomArticle(request.getParameter("nomArticle"));
 			articleVendu.setDescription(request.getParameter("description"));
 			articleVendu.setPrixInitial(Integer.parseInt(request.getParameter("prixInitial")));
+			articleVendu.setPrixVente(Integer.parseInt(request.getParameter("prixInitial")));
 			articleVendu.setDateDebutEncheres(LocalDate.parse(request.getParameter("dateDebutEncheres")));
 			articleVendu.setDateFinEncheres(LocalDate.parse(request.getParameter("dateFinEncheres")));
 			articleVendu.setCategorie(categorie);
