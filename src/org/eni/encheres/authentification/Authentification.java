@@ -17,21 +17,6 @@ public class Authentification {
 	
 	private static final String ATT_SESSION_USER = "sessionUtilisateur";
 	
-	/**
-	 * Vérifier si un utilisateur est connecté
-	 * @return true si user connecté
-	 * @throws BusinessException
-	 */
-	public boolean authorize(HttpServletRequest request) {
-	//verifie si user != null dans la session
-		HttpSession session = request.getSession();
-		/* Récupération de l'objet depuis la session */
-		if (session.getAttribute("user") == null) {
-			return false;
-		}
-		return true;
-
-	}
 	
 	/**
 	 * Récupérer Utilisateur de la session
@@ -39,14 +24,11 @@ public class Authentification {
 	 * @return Utilisateur
 	 * @throws BusinessException
 	 */
-	public Utilisateur getUtilisateurFromSession(HttpServletRequest request) throws BusinessException {
+	public Utilisateur getUtilisateurFromSession(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		
-		if (session.getAttribute("user") == null) {
-			throw new BusinessException();
-		}
-		Utilisateur user = (Utilisateur) session.getAttribute("user");
+		Utilisateur user = (Utilisateur) session.getAttribute("sessionUtilisateur");
 		return user;
 	}
 	
