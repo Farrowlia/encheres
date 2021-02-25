@@ -196,7 +196,7 @@
 											class="form-control" type="password" maxlength="30">
 									</div>
 									<div class="form-group">
-										<input name="confirmNewMotDePasse"
+										<input name=confirmation
 											placeholder="Confirmer nouveau mot de Passe" class="form-control"
 											type="password" maxlength="30">
 									</div>

@@ -15,8 +15,13 @@ import org.eni.encheres.authentification.Authentification;
 import org.eni.encheres.authentification.InscriptionException;
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.dto.ModifProfilDTO;
 import org.eni.encheres.erreur.BusinessException;
 import org.eni.encheres.utils.MapUtils;
+
+import com.microsoft.sqlserver.jdbc.StringUtils;
+
+import static org.eni.encheres.utils.MapUtils.getValeurChamp;
 
 /**
  * Servlet implementation class ServletModifierProfil
@@ -24,6 +29,10 @@ import org.eni.encheres.utils.MapUtils;
 @WebServlet("/ModifierProfil")
 public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	private static final String ATT_USER = "utilisateur";
+	private static final String ATT_FORM = "form";
+
 	UtilisateurManager um = new UtilisateurManager();
 	Authentification authentification = new Authentification();
 
@@ -59,31 +68,24 @@ public class ServletModifierProfil extends HttpServlet {
 
 		// mise à jour du compte (UPDATE)
 		request.setCharacterEncoding("UTF-8");
-
-		Utilisateur utilisateur = new Authentification().getUtilisateurFromSession(request);
-		String motDePasseActuel = utilisateur.getMotDePasse();
-		utilisateur = MapUtils.mapUtilisateur(request);
-		if (MapUtils.getValeurChamp(request, "newMotDePasse") == null) {
-			utilisateur.setMotDePasse(motDePasseActuel);
-			}
-		String newMotDePasse = MapUtils.getValeurChamp(request, "newMotDePasse");
-//		if (newMotDePasse != null) {
-//			//vérifier qu'il est différent du mdp actuel
-//			if ()
-			//récupérer mdp et confirmation
-			//le charger dans utilisateur
-			
 		
-			try {
-				um.saveNewOrExistingCompte(utilisateur);
-			} catch (SQLException | InscriptionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			HttpSession session = request.getSession();
-			session.setAttribute("sessionUtilisateur", utilisateur);
+		// récupération des valeurs du formulaire
+		ModifProfilDTO modifProfilDTO = MapUtils.mapModifProfilDTO(request);
 
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+		try {
+			Utilisateur updatedUtilisateur = um.updateUtilisateur(modifProfilDTO);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("sessionUtilisateur", updatedUtilisateur);
+		} catch (SQLException e) {
+			System.out.println("erreur BDD");
+		} catch (InscriptionException e) {
+			// Si échec de la validation de l'update utilisateur
+			/* Stockage du formulaire et du bean dans l'objet request */
+			request.setAttribute(ATT_FORM, e);
+			request.setAttribute(ATT_USER, modifProfilDTO);
+		}
+		request.getRequestDispatcher("Accueil").forward(request, response);
 	}
 
 }

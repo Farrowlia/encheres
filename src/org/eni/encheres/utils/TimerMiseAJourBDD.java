@@ -8,7 +8,7 @@ public class TimerMiseAJourBDD extends TimerTask {
 	}
 	
 	public void run() {
-		System.out.println("Mise à jour de la base de données");
+//		System.out.println("Mise à jour de la base de données");
 	}
 	
 }
