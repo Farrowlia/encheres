@@ -39,24 +39,17 @@ public class UtilisateurValidator {
 					"Ce pseudo ne doit contenir que des caractères alpha-numériques");
 		}
 
-//		if (utilisateur.getCodePostal() != null && utilisateur.getCodePostal().trim().length() != 5
-//				&& !utilisateur.getCodePostal().matches("[0-9]")) {
-//			inscriptionException.setErreur(MapUtils.CHAMP_CP, "Le format du code postal n'est pas correct");
-//		}
-
+		try {
+			validationMotsDePasse(utilisateur.getMotDePasse());
+		} catch (Exception ex) {
+			inscriptionException.setErreur(MapUtils.CHAMP_PWD, ex.getMessage());
+		}
+		
 		try {
 			validationEmail(utilisateur.getEmail());
 		} catch (Exception ex) {
 			inscriptionException.setErreur(MapUtils.CHAMP_EMAIL, ex.getMessage());
 		}
-
-//		try {
-//			validationMotsDePasse(utilisateur.getMotDePasse(), MapUtils.getValeurChamp(request, MapUtils.CHAMP_CONF));
-//		//TODO DTO
-//		} catch (Exception ex) {
-//			inscriptionException.setErreur(MapUtils.CHAMP_PWD, ex.getMessage());
-//			inscriptionException.setErreur(MapUtils.CHAMP_CONF, null);
-//		}
 
 		try {
 			validationTexte(utilisateur.getPseudo());
@@ -96,21 +89,18 @@ public class UtilisateurValidator {
 	}
 
 	/**
-	 * Valide les mots de passe saisis.
+	 * Valide le mot de passe saisi.
+	 * @throws Exception 
 	 */
-	public static void validationMotsDePasse(String motDePasse, String confirmation, InscriptionException inscriptionException) {
+	public static void validationMotsDePasse(String motDePasse) throws Exception {
 
-		if (motDePasse != null && confirmation != null) {
-			if (!motDePasse.equals(confirmation)) {
-				inscriptionException.setErreur(MapUtils.CHAMP_CONF, "Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
-			} else if (motDePasse.trim().length() < 5) {
-				inscriptionException.setErreur(MapUtils.CHAMP_PWD, "Les mots de passe doivent contenir au moins 5 caractères.");
-			} else if (motDePasse.length() > 30) {
-				inscriptionException.setErreur(MapUtils.CHAMP_PWD, "Retapez un mot de passe de moins de 30 caractères sans caractères spéciaux");
+		
+			if (motDePasse.trim().length() < 5) {
+				throw new Exception("Les mots de passe doivent contenir au moins 5 caractères.");
 			}
-		} else {
-			inscriptionException.setErreur(MapUtils.CHAMP_PWD, "Merci de saisir et confirmer votre mot de passe.");
-		}
+			if (motDePasse.length() > 30) {
+				throw new Exception("Retapez un mot de passe de moins de 30 caractères sans caractères spéciaux");
+			}
 	}
 
 	/**

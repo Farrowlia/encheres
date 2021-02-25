@@ -65,14 +65,14 @@ public class ServletAuthentification extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Authentification auth = new Authentification();
 		try {
-			auth.login(request); //vérifie 
+			new Authentification().login(request); //vérifie 
 //			je factorise ces 3 lignes
 //			Utilisateur user = auth.login(MapUtils.getValeurChamp(request, MapUtils.CHAMP_LOGIN), MapUtils.getValeurChamp(request, MapUtils.CHAMP_PWD));
 //			request.setAttribute(ATT_USER, user);
 //			session.setAttribute(ATT_SESSION_USER, user);
 		} catch (LoginException loginException) {
+			//si la déconnexion ne réussit pas :
 			request.setAttribute(ATT_FORM, loginException); //renvoie les messages d'erreur dans le formulaire
 //			session.setAttribute(ATT_SESSION_USER, null); => inutile
 			request.setAttribute(ATT_ISLOGIN, true); //permet de conditionner le css dans la JSP
