@@ -47,7 +47,7 @@ public class ServletAccueil extends HttpServlet {
 		// Appelle du Run contenu dans utils.TimerMiseAJourBDD
 		TimerTask timerMiseAJourBDD = new TimerMiseAJourBDD();
 		Timer timer = new Timer();
-		timer.schedule(timerMiseAJourBDD, 1000, 1000);
+		timer.schedule(timerMiseAJourBDD, 100000, 100000); // Délai entre chaque MAJ de la BDD en millisecondes
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");

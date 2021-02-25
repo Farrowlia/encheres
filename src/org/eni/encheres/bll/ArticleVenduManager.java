@@ -64,6 +64,10 @@ private ArticleVenduDAO articleVenduDAO;
 		return articleVenduDAO.selectArticleVenduById(noArticle);
 	}
 	
+	public void updateAllArticleVendu() throws BusinessException {
+		articleVenduDAO.updateAllArticleVendu();
+	}
+	
 	private void valider(ArticleVendu articleVendu, BusinessException exeption) {
 		articleVendu.setNomArticle(articleVendu.getNomArticle().trim());
 		if (articleVendu.getNomArticle() == null || articleVendu.getNomArticle().equals("") || articleVendu.getNomArticle().length() > 30) {

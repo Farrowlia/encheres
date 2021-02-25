@@ -115,9 +115,9 @@
 												</a>
 
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-												<a class="dropdown-item text-dark" href="ModifierProfil">Mon profil</a>
-												<a class="dropdown-item text-dark" href="MesArticles">Mes articles</a>
-												<a class="dropdown-item text-dark" href="Deconnexion">Se déconnecter</a>
+												<a class="dropdown-item text-dark border-0" href="ModifierProfil">Mon profil</a>
+												<a class="dropdown-item text-dark border-0" href="MesArticles">Mes articles</a>
+												<a class="dropdown-item text-dark border-0" href="Deconnexion">Se déconnecter</a>
 											</div>
 										</div>
 									</c:if>
