@@ -38,7 +38,6 @@ public class ServletModifierProfil extends HttpServlet {
 		Authentification authentification = new Authentification();
 			if (authentification.authorize(request)) {
 				UtilisateurManager um = new UtilisateurManager();
-				
 				try {
 					um.deleteCompte(authentification.getUtilisateurFromSession(request)); //supprime le compte et les ventes en cours et encheres associées
 					this.getServletContext().getRequestDispatcher("/Deconnexion").forward(request, response); //déconnecte l'utilisateur et le redirige vers la page d'accueil
