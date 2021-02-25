@@ -620,6 +620,10 @@ p {
     transition: all 0.3s ease-out 0s;
 }
 
+.navbar-area .navbar .navbar-nav .nav-item a.button-lien-perso {
+    padding: 0;
+}
+
 @media (max-width: 991px) {
     .navbar-area .navbar .navbar-nav .nav-item a {
         padding: 10px 0;
