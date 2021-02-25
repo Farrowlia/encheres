@@ -3,6 +3,8 @@ package org.eni.encheres.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.eni.encheres.bll.CategorieManager;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.erreur.BusinessException;
+import org.eni.encheres.utils.TimerMiseAJourBDD;
 
 /**
  * Servlet implementation class Accueil
@@ -39,6 +42,13 @@ public class ServletAccueil extends HttpServlet {
 		}
 		
 		session.setAttribute("listeCategorie", listeCategorie);
+		
+		
+		// Appelle du Run contenu dans utils.TimerMiseAJourBDD
+		TimerTask timerMiseAJourBDD = new TimerMiseAJourBDD();
+		Timer timer = new Timer();
+		timer.schedule(timerMiseAJourBDD, 1000, 1000);
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
