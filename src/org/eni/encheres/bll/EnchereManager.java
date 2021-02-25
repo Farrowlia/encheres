@@ -27,7 +27,6 @@ public class EnchereManager {
 			throw exception;
 		}
 		else {
-			System.out.println("j'ai passé la validation");
 			enchereDAO.insertEnchere(enchere);
 		}
 	}
@@ -44,7 +43,6 @@ public class EnchereManager {
 		List<Enchere> listeEncheres = enchereDAO.selectEnchere(enchere.getArticleVendu());
 		
 		if (listeEncheres.size() > 0) {
-			System.out.println("je suis dans la validation");
 			int montantEnchereMax = listeEncheres.get(0).getMontanEnchere(); // la 1ère enchère est la plus haute car ORDER BY dans la dal
 			if (enchere.getMontanEnchere() <= montantEnchereMax) {
 				exeption.ajouterErreur(CodesResultatBLL.REGLE_MONTANT_ENCHERE_ERREUR);
