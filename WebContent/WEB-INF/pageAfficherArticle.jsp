@@ -182,10 +182,12 @@
 						<span class="font-weight-bold">Catégorie :</span><span
 							class="ml-2"> ${articleVendu.categorie.libelle}</span>
 					</div>
+					<c:if test="${enchere.utilisateur.pseudo != null}">
 					<div class="d-flex align-items-center mt-4 offers mb-1">
-						<span class="font-weight-bold">Enchère actuelle :</span><span
-							class="ml-2"> par Diego356</span>
+						<span class="font-weight-bold">Dernière enchère :</span><span
+							class="ml-2"> par ${enchere.utilisateur.pseudo}</span>
 					</div>
+					</c:if>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
 						<span class="font-weight-bold">Mise à prix :</span><span
 							class="ml-2"> ${articleVendu.prixInitial} $</span>
