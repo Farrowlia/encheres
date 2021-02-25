@@ -34,7 +34,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setDate(3, java.sql.Date.valueOf(articleVendu.getDateDebutEncheres()));
 			pstmt.setDate(4, java.sql.Date.valueOf(articleVendu.getDateFinEncheres()));
 			pstmt.setInt(5, articleVendu.getPrixInitial());
-			pstmt.setInt(6, articleVendu.getPrixInitial());
+			pstmt.setInt(6, articleVendu.getPrixVente());
 			pstmt.setString(7, articleVendu.getEtatVente());
 			pstmt.setInt(8, articleVendu.getUtilisateur().getNoUtilisateur());
 			pstmt.setInt(9, articleVendu.getCategorie().getNoCategorie());
@@ -187,6 +187,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					if (!finRequeteSQL2.equals(";")) {
 						pstmt.setInt(1, categorie.getNoCategorie());
 						pstmt.setString(2, keyword);
+					}
+					else {
+						pstmt.setInt(1, categorie.getNoCategorie());
 					}
 			}
 			ResultSet rs = pstmt.executeQuery();
