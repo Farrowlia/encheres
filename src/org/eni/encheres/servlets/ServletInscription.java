@@ -15,6 +15,7 @@ import org.eni.encheres.authentification.Authentification;
 import org.eni.encheres.authentification.InscriptionException;
 import org.eni.encheres.authentification.LoginException;
 import org.eni.encheres.bll.UtilisateurManager;
+import org.eni.encheres.bll.validator.UtilisateurValidator;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.utils.MapUtils;
 import org.eni.encheres.utils.URL_JSP;;
@@ -49,17 +50,22 @@ public class ServletInscription extends HttpServlet {
 		InscriptionException inscriptionException = new InscriptionException();
 		Utilisateur utilisateur = MapUtils.mapUtilisateur(request);
 		String motDePasse = getValeurChamp(request, MapUtils.CHAMP_PWD);
-
+		
 		try {
-			// validation mdp
-			if (!motDePasse.equals(getValeurChamp(request, ATT_FORM))) {
+			// validation mdp à faire dans le validateur
+			if (!motDePasse.equals(getValeurChamp(request, MapUtils.CHAMP_CONF))) {
 				inscriptionException.setErreur(MapUtils.CHAMP_CONF, "Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
 			} else {
-			utilisateur.setMotDePasse(motDePasse);
+				utilisateur.setMotDePasse(motDePasse);
 			}
-			// validation utilisateur et insertion en BDD, puis login
-			new UtilisateurManager().saveNewOrExistingCompte(utilisateur);
-			new Authentification().login(request);
+			UtilisateurValidator.validateUtilisateur(utilisateur, inscriptionException);
+			
+			if (inscriptionException.hasErreurs()) {
+				throw inscriptionException;
+			}
+			// insertion en BDD, puis login
+			new UtilisateurManager().createUtilisateur(utilisateur);
+			request.getSession().setAttribute("sessionUtilisateur", utilisateur);
 			//redirection vers la page accueil en mode connecté
 			this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);
 		
@@ -71,9 +77,6 @@ public class ServletInscription extends HttpServlet {
 			request.setAttribute(ATT_ISLOGIN, false);
 			/* Transmission de la paire d'objets request/response à notre JSP initiale */
 			this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_INSCRIPTION).forward(request, response);
-
-		} catch (LoginException e) {
-			System.out.println("erreur login");
 
 		} catch (SQLException e) {
 				System.out.println("erreur BDD");

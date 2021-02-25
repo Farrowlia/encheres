@@ -7,6 +7,7 @@ import org.eni.encheres.bll.validator.UtilisateurValidator;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.utilisateur.UtilisateurDAO;
+import org.eni.encheres.dto.ModifProfilDTO;
 import org.eni.encheres.erreur.BusinessException;
 
 public class UtilisateurManager {
@@ -20,39 +21,49 @@ public class UtilisateurManager {
 		
 	}
 
+	public Utilisateur createUtilisateur(Utilisateur utilisateur) throws SQLException {
 	
-	public void saveNewOrExistingCompte(Utilisateur utilisateur) throws SQLException, InscriptionException {
+
+		//création d'un compte
+		//mettre le crédit à '100', compte actif et administrateur à 'false'
+		utilisateur.setCredit(100);
+		utilisateur.setCompteActif(true);
+		utilisateur.setAdministrateur(false);
+		
+		return userDAO.insertUtilisateur(utilisateur);
+	} 
+	
+	public Utilisateur updateUtilisateur(ModifProfilDTO modifProfilDTO) throws SQLException, InscriptionException {
 		InscriptionException inscriptionException = new InscriptionException();
-		UtilisateurValidator.validateUtilisateur(utilisateur, inscriptionException);
+		UtilisateurValidator.validateModifProfilDTO(modifProfilDTO, inscriptionException);
 		
 		if (inscriptionException.hasErreurs()) {
 			throw inscriptionException;
 		}
-		if (utilisateur.getNoUtilisateur() != 0) {
-			//si le compte est modifiable et modifié, enregistrer les modifs
-			userDAO.createOrUpdateUtilisateur(utilisateur);
-		} else {
-			//création d'un compte
-			//mettre le crédit à '100' et administrateur à 'false'
-			Utilisateur newUser = new Utilisateur(	utilisateur.getPseudo(), 
-					utilisateur.getNom(), 
-					utilisateur.getPrenom(), 
-					utilisateur.getEmail(),
-					utilisateur.getTelephone(),
-					utilisateur.getRue(),
-					utilisateur.getCodePostal(),
-					utilisateur.getVille(),
-					utilisateur.getMotDePasse(),
-					100, 
-					false,
-					true);
-			
-			userDAO.createOrUpdateUtilisateur(newUser);
-		}
+		Utilisateur userToUpdate = new Utilisateur(
+				modifProfilDTO.getNoUtilisateur(),
+				modifProfilDTO.getPseudo(), 
+				modifProfilDTO.getNom(), 
+				modifProfilDTO.getPrenom(), 
+				modifProfilDTO.getEmail(),
+				modifProfilDTO.getTelephone(),
+				modifProfilDTO.getRue(),
+				modifProfilDTO.getCodePostal(),
+				modifProfilDTO.getVille(),
+				modifProfilDTO.getMotDePasse());
 		
-	}
+		return userDAO.updateUtilisateur(userToUpdate, modifProfilDTO.isUpdatePwd());
+	} 
 	
-
+	/**
+	 * @apiNote cette méthode vérifie si l'utilisateur existe déjà
+	 * @param noUtilisateur
+	 * @return booléen
+	 * @throws SQLException 
+	 */
+	public boolean isUserExists(int noUtilisateur) throws SQLException {
+			return userDAO.selectById(noUtilisateur) != null;	
+	}
 	
 	/**
 	 * Mise à jour du mot de passe après demande de réinitialisation
