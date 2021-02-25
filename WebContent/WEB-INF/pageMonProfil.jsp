@@ -146,7 +146,7 @@
 						<div class="row justify-content-center">
 							<div class="col-lg-8 register-form">
 								<form id="connection-form" class="form"
-									action="ModifierProfil?action=update" method="post">
+									action="${pageContext.request.contextPath}/ModifierProfil" method="post">
 									<div class="form-group">
 										<input name="pseudo" placeholder="Pseudo"
 											value="${sessionUtilisateur.pseudo}" class="form-control"
@@ -170,7 +170,7 @@
 									<div class="form-group">
 										<input name="telephone" placeholder="Telephone"
 											value="${sessionUtilisateur.telephone}" class="form-control"
-											type="tel" maxlength="15" required>
+											type="tel" maxlength="15">
 									</div>
 									<div class="form-group">
 										<input name="rue" placeholder="Rue"
@@ -189,15 +189,19 @@
 									</div>
 									<div class="form-group">
 										<input name="motDePasse" placeholder="Mot de passe"
-											class="form-control" type="password" maxlength="30" required>
+											class="form-control" type="password" maxlength="30">
 									</div>
 									<div class="form-group">
-										<input name="confirmationMotDePasse"
-											placeholder="Confirmer Mot de Passe" class="form-control"
-											type="password" maxlength="30" required>
+										<input name="newMotDePasse" placeholder="Nouveau mot de passe"
+											class="form-control" type="password" maxlength="30">
 									</div>
 									<div class="form-group">
-										<input name="btnSubmit"
+										<input name="confirmNewMotDePasse"
+											placeholder="Confirmer nouveau mot de Passe" class="form-control"
+											type="password" maxlength="30">
+									</div>
+									<div class="form-group">
+										<input name="update"
 											class="btn btn-lg btn-primary btn-block" value="Enregistrer"
 											type="submit">
 									</div>
@@ -210,13 +214,13 @@
 									<div class="modal-dialog">
 										<div class="card">
 											<div class="card-body text-center">
-												<h4>Confirmation suppression</h4>
+												<h4>Confirmer la suppression du compte ?</h4>
 												<hr>
-												<form action="ModifierProfil?action=delete" class="form" method="post">
+												<form action="ModifierProfil" class="form" method="post">
 													<input value="delete" type="hidden">
 													<input name="btnSubmit"
 														class="btn btn-lg btn-primary btn-block"
-														value="Enregistrer" type="submit">
+														value="Supprimer" type="submit">
 												</form>
 											</div>
 										</div>

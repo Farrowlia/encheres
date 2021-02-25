@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 		DispatcherType.FORWARD, 
 		DispatcherType.INCLUDE, 
 }, 
-urlPatterns = {"/NouvelleVente", "/NouvelleEnchere"})
+urlPatterns = {"/NouvelleVente", "/NouvelleEnchere", "/ModifierProfil"})
 public class FilterUtilisateurConnecte implements Filter {
 
     /**

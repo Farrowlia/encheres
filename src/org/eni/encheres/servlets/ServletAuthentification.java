@@ -58,6 +58,7 @@ public class ServletAuthentification extends HttpServlet {
 		
 		request.setAttribute("cookieSeSouvenir", cookieSeSouvenir);
 		
+		request.setAttribute(ATT_ISLOGIN, true); //pour arriver sur l'onglet "Se connecter"
 		request.getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION).forward(request, response);
 	}
 
@@ -78,7 +79,7 @@ public class ServletAuthentification extends HttpServlet {
 			request.setAttribute(ATT_ISLOGIN, true); //permet de conditionner le css dans la JSP
 			this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_CONNEXION).forward(request, response);
 		}
-		this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);
+		request.getRequestDispatcher("Accueil").forward(request, response);
 		
 	}
 
