@@ -19,12 +19,17 @@ public class MapUtils {
 	/* pour la connexion par email ou pseudo : */
 	public static final String CHAMP_LOGIN= "login";
 
+	/**
+	 * Mappe un utilisateur SANS le mot de passe
+	 * @param request
+	 * @return
+	 */
 	public static Utilisateur mapUtilisateur(HttpServletRequest request) {
 		/* Récupération des champs du formulaire. */
 		Utilisateur user = new Utilisateur();
 
 		user.setEmail(getValeurChamp(request, CHAMP_EMAIL));
-		user.setMotDePasse(getValeurChamp(request, CHAMP_PWD));
+//		user.setMotDePasse(getValeurChamp(request, CHAMP_PWD));
 		user.setPseudo(getValeurChamp(request, CHAMP_PSEUDO));
 		user.setCodePostal(getValeurChamp(request, CHAMP_CP));
 		user.setNom(getValeurChamp(request, CHAMP_NOM));

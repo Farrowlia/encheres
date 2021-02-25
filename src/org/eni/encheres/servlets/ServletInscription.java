@@ -29,8 +29,6 @@ public class ServletInscription extends HttpServlet {
 	private static final String ATT_USER = "utilisateur";
 	private static final String ATT_FORM = "form";
 
-	private static final String ATT_SESSION_USER = "sessionUtilisateur";
-
 	private static final String ATT_ISLOGIN = "isLogin";
 
 	/**
@@ -50,11 +48,14 @@ public class ServletInscription extends HttpServlet {
 
 		InscriptionException inscriptionException = new InscriptionException();
 		Utilisateur utilisateur = MapUtils.mapUtilisateur(request);
+		String motDePasse = getValeurChamp(request, MapUtils.CHAMP_PWD);
 
 		try {
 			// validation mdp
-			if (!utilisateur.getMotDePasse().equals(getValeurChamp(request, ATT_FORM))) {
+			if (!motDePasse.equals(getValeurChamp(request, ATT_FORM))) {
 				inscriptionException.setErreur(MapUtils.CHAMP_CONF, "Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
+			} else {
+			utilisateur.setMotDePasse(motDePasse);
 			}
 			// validation utilisateur et insertion en BDD, puis login
 			new UtilisateurManager().saveNewOrExistingCompte(utilisateur);
