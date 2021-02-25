@@ -42,7 +42,14 @@ public class ServletRechercheArticles extends HttpServlet {
 			categorie.setNoCategorie(Integer.parseInt(request.getParameter("categorie")));
 			
 			try {
-				listeArticleVendu = articleVenduManager.selectArticleVendu(categorie, request.getParameter("keyword"));
+				List<ArticleVendu> listeArticleVenduTemporaire = new ArrayList<>();
+				listeArticleVenduTemporaire = articleVenduManager.selectArticleVendu(categorie, request.getParameter("keyword"));
+				
+				for (ArticleVendu articleVendu : listeArticleVenduTemporaire) {
+					if (articleVendu.getEtatVente().equals("en_vente")) {
+						listeArticleVendu.add(articleVendu);
+					}
+				}
 				
 			} catch (BusinessException e) {
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());

@@ -1,4 +1,5 @@
 <%@page import="org.eni.encheres.erreur.LecteurMessage"%>
+<%@page import="java.time.LocalDate"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -234,8 +235,14 @@
 						<input name="btnSubmit" class="btn btn-success" value="Enchérir" type="submit">
 						</form>
 						</c:if>
+						
+						<c:if test="${articleVendu.dateDebutEncheres > LocalDate.now()}">
 						<c:if test="${sessionUtilisateur.noUtilisateur == articleVendu.utilisateur.noUtilisateur}">
 							<a class="solid" href="ModifierArticle">Modifier l'article</a>
+						</c:if>
+						<c:if test="${sessionUtilisateur.noUtilisateur == articleVendu.utilisateur.noUtilisateur}">
+							<a class="solid" href="AnnulerArticle">Annuler la vente</a>
+						</c:if>
 						</c:if>
 					</div>
 				</div>

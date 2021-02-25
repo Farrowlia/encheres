@@ -201,7 +201,7 @@
 								<div class="form-group row">
 									<label for="description" class="col-2 col-form-label">Image</label>
 									<div class="col-10">
-										<input id="cheminUrl" name="cheminUrl"
+										<input id="cheminUrl" name="cheminUrl" 
 											placeholder="URL" class="form-control" type="text" maxlength="200">
 									</div>
 								</div>
