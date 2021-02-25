@@ -48,6 +48,8 @@ public class ServletMesArticles extends HttpServlet {
 		EnchereManager enchereManager = new EnchereManager();
 		
 		if (request.getParameter("radio").equals("radioAchat")) {
+			// TODO pour récupérer achat remporté, utiliser méthode enchereManager.selectEnchereRemporteByUtilisateur(utilisateur);
+			
 			try {
 				List<Enchere> listeEnchere = new ArrayList<>();
 				listeEnchere = enchereManager.selectEnchere(utilisateur);

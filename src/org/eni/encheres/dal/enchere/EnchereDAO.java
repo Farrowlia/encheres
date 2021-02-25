@@ -12,5 +12,6 @@ import org.eni.encheres.erreur.BusinessException;
 		public void insertEnchere(Enchere enchere) throws BusinessException;
 		public List<Enchere> selectEnchere(Utilisateur utilisateur) throws BusinessException;
 		public List<Enchere> selectEnchere(ArticleVendu articleVendu) throws BusinessException;
+		public List<Enchere> selectEnchereRemporteByUtilisateur(Utilisateur utilisateur) throws BusinessException;
 		
 	}

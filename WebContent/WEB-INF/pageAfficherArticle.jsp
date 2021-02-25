@@ -114,9 +114,9 @@
 												</a>
 
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-												<a class="dropdown-item text-dark" href="ModifierProfil">Mon profil</a>
-												<a class="dropdown-item text-dark" href="MesArticles">Mes articles</a>
-												<a class="dropdown-item text-dark" href="Deconnexion">Se déconnecter</a>
+												<a class="dropdown-item text-dark border-0" href="ModifierProfil">Mon profil</a>
+												<a class="dropdown-item text-dark border-0" href="MesArticles">Mes articles</a>
+												<a class="dropdown-item text-dark border-0" href="Deconnexion">Se déconnecter</a>
 											</div>
 										</div>
 									</c:if>
@@ -238,10 +238,18 @@
 						
 						<c:if test="${articleVendu.dateDebutEncheres > LocalDate.now()}">
 						<c:if test="${sessionUtilisateur.noUtilisateur == articleVendu.utilisateur.noUtilisateur}">
-							<a class="solid" href="ModifierArticle">Modifier l'article</a>
+							<a class="button-lien-perso" href="ModifierArticle">
+								<button type="button" class="btn btn-outline-dark">
+									Modifier l'article
+								</button>
+							</a>
 						</c:if>
 						<c:if test="${sessionUtilisateur.noUtilisateur == articleVendu.utilisateur.noUtilisateur}">
-							<a class="solid" href="AnnulerArticle">Annuler la vente</a>
+							<a class="button-lien-perso" href="AnnulerArticle">
+								<button type="button" class="btn btn-outline-dark">
+									Annuler la vente
+								</button>
+							</a>
 						</c:if>
 						</c:if>
 					</div>

@@ -115,9 +115,9 @@
 												</a>
 
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-												<a class="dropdown-item text-dark" href="ModifierProfil">Mon profil</a>
-												<a class="dropdown-item text-dark" href="MesArticles">Mes articles</a>
-												<a class="dropdown-item text-dark" href="Deconnexion">Se déconnecter</a>
+												<a class="dropdown-item text-dark border-0" href="ModifierProfil">Mon profil</a>
+												<a class="dropdown-item text-dark border-0" href="MesArticles">Mes articles</a>
+												<a class="dropdown-item text-dark border-0" href="Deconnexion">Se déconnecter</a>
 											</div>
 										</div>
 									</c:if>
@@ -146,9 +146,9 @@
 				<div class="panel-body col-lg-10">
 					<form id="search-form" class="form"
 						action="MesArticles" method="post">
-						<div class="row">
+						<div class="row justify-content-center">
 						
-							<div class="col">
+							<div class="col-5">
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" type="radio" name="radio"
 										id="radioAchat" value="radioAchat" checked="true"
@@ -169,7 +169,7 @@
 								</div>
 							</div>
 							
-							<div class="col">
+							<div class="col-4">
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" type="radio" name="radio"
 										id="radioVente" value="radioVente"
@@ -199,7 +199,7 @@
 						<div class="row justify-content-center">
 							<div class="form-group">
 								<input name="btnSubmit" class="btn btn-lg btn-primary btn-block"
-									value="Rechercher" type="submit">
+									value="Rechercher" type="submit" style="margin-top:1rem;">
 							</div>
 						</div>
 					</form>

@@ -11,7 +11,7 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private String etatVente; // peut prendre 4 valeurs différentes (en_attente, en_vente, annule, vendu, archive) - par defaut (en_attente)
+	private String etatVente; // peut prendre 5 valeurs différentes (en_attente, en_vente, annule, vendu, archive) - par defaut (en_attente)
 	private Utilisateur utilisateur;
 	private Categorie categorie;
 	

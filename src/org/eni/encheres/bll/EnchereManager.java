@@ -38,6 +38,10 @@ public class EnchereManager {
 	public List<Enchere> selectEnchere(ArticleVendu articleVendu) throws BusinessException {
 		return enchereDAO.selectEnchere(articleVendu);
 	}
+	
+	public List<Enchere> selectEnchereRemporteByUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		return enchereDAO.selectEnchereRemporteByUtilisateur(utilisateur);
+	}
 
 	private void valider(Enchere enchere, BusinessException exeption) throws BusinessException {
 		List<Enchere> listeEncheres = enchereDAO.selectEnchere(enchere.getArticleVendu());
