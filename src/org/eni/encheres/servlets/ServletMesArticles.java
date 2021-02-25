@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.ArticleVenduManager;
+import org.eni.encheres.bll.EnchereManager;
 import org.eni.encheres.bo.ArticleVendu;
+import org.eni.encheres.bo.Enchere;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.erreur.BusinessException;
 
@@ -43,10 +45,15 @@ public class ServletMesArticles extends HttpServlet {
 		List<ArticleVendu> listeArticleVendu = new ArrayList<>();
 		
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
+		EnchereManager enchereManager = new EnchereManager();
 		
 		if (request.getParameter("radio").equals("radioAchat")) {
 			try {
-				listeArticleVendu = articleVenduManager.selectArticleVenduByAchatUtilisateur(utilisateur);
+				List<Enchere> listeEnchere = new ArrayList<>();
+				listeEnchere = enchereManager.selectEnchere(utilisateur);
+				for (Enchere enchere : listeEnchere) {
+					listeArticleVendu.add(enchere.getArticleVendu());
+				}
 				
 			} catch (BusinessException e) {
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
