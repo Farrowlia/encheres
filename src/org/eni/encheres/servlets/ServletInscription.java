@@ -1,5 +1,7 @@
 package org.eni.encheres.servlets;
 
+import static org.eni.encheres.utils.MapUtils.getValeurChamp;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -8,11 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.eni.encheres.authentification.Authentification;
 import org.eni.encheres.authentification.InscriptionException;
+import org.eni.encheres.authentification.LoginException;
 import org.eni.encheres.bll.UtilisateurManager;
-import org.eni.encheres.bll.validator.UtilisateurValidator;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.utils.MapUtils;
 import org.eni.encheres.utils.URL_JSP;;
@@ -46,39 +48,37 @@ public class ServletInscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		UtilisateurManager um = new UtilisateurManager();
 		InscriptionException inscriptionException = new InscriptionException();
-		HttpSession session = request.getSession();
 		Utilisateur utilisateur = MapUtils.mapUtilisateur(request);
 
 		try {
 			// validation mdp
-			UtilisateurValidator.validationMotsDePasse(utilisateur.getMotDePasse(),
-					MapUtils.getValeurChamp(request, MapUtils.CHAMP_CONF), inscriptionException);
-			// validation utilisateur
-			UtilisateurValidator.validateUtilisateur(utilisateur, inscriptionException);
-
-			if (inscriptionException.hasErreurs()) {
-				// Si échec de la validation de l'utilisateur
-				/* Stockage du formulaire et du bean dans l'objet request */
-				request.setAttribute(ATT_FORM, inscriptionException);
-				request.setAttribute(ATT_USER, utilisateur);
-				request.setAttribute(ATT_ISLOGIN, false);
-				/* Transmission de la paire d'objets request/response à notre JSP */
-				this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_INSCRIPTION).forward(request, response);
-			} else {
-			um.saveNewOrExistingCompte(utilisateur);
-			session.setAttribute(ATT_SESSION_USER, utilisateur); //connecte l'utilisateur en le mettant dans la session
-			this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);
-			//TODO connecter user
+			if (!utilisateur.getMotDePasse().equals(getValeurChamp(request, ATT_FORM))) {
+				inscriptionException.setErreur(MapUtils.CHAMP_CONF, "Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
 			}
-		} catch (SQLException e) {
-			System.out.println("erreur BDD");
-			// TODO Renvoyer une réponse indiquant un prob avec la base de données
-			// (i.e. initialiser variable ici et l'appeler dans setattribute
+			// validation utilisateur et insertion en BDD, puis login
+			new UtilisateurManager().saveNewOrExistingCompte(utilisateur);
+			new Authentification().login(request);
+			//redirection vers la page accueil en mode connecté
+			this.getServletContext().getRequestDispatcher(URL_JSP.URL_RECHERCHE).forward(request, response);
+		
+		} catch (InscriptionException e) {
+			// Si échec de la validation de l'utilisateur
+			/* Stockage du formulaire et du bean dans l'objet request */
+			request.setAttribute(ATT_FORM, inscriptionException);
+			request.setAttribute(ATT_USER, utilisateur);
+			request.setAttribute(ATT_ISLOGIN, false);
+			/* Transmission de la paire d'objets request/response à notre JSP initiale */
+			this.getServletContext().getRequestDispatcher(URL_JSP.URL_JSP_INSCRIPTION).forward(request, response);
 
+		} catch (LoginException e) {
+			System.out.println("erreur login");
+
+		} catch (SQLException e) {
+				System.out.println("erreur BDD");
+				// TODO Renvoyer une réponse indiquant un prob avec la base de données
+				// (i.e. initialiser variable ici et l'appeler dans setattribute
 		}
 	}
-	
 
 }

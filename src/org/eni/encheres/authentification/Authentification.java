@@ -91,6 +91,8 @@ public class Authentification {
 		HttpSession session = request.getSession();
 
 		session.setAttribute(ATT_SESSION_USER, user);
+		
+
 	}
 	
 }

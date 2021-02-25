@@ -1,7 +1,5 @@
 package org.eni.encheres.utils;
 
-import java.net.http.HttpRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.eni.encheres.bo.Utilisateur;
