@@ -18,8 +18,8 @@ import org.eni.encheres.erreur.BusinessException;
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
 	private static final String INSERT_ENCHERE = "INSERT INTO ENCHERES (date_enchere, montant_enchere, no_utilisateur, no_article) values (?, ?, ?, ?);";
-	private static final String SELECT_ENCHERE_BY_ARTICLE_VENDU = "SELECT * FROM ENCHERES AS ench INNER JOIN ARTICLES_VENDUS AS art ON ench.no_article = art.no_article INNER JOIN UTILISATEURS AS user ON ench.no_utilisateur = user.no_utilisateur WHERE art.no_article = ? ORDER BY montant_enchere DESC;";
-	private static final String SELECT_ENCHERE_BY_UTILISATEUR = "SELECT * FROM ENCHERES AS ench INNER JOIN ARTICLES_VENDUS AS art ON ench.no_article = art.no_article INNER JOIN CATEGORIES AS car ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS user ON art.no_utilisateur = user.no_utilisateur WHERE user.no_utilisateur = ? ORDER BY date_enchere DESC;";
+	private static final String SELECT_ENCHERE_BY_ARTICLE_VENDU = "SELECT * FROM ENCHERES AS ench INNER JOIN ARTICLES_VENDUS AS art ON ench.no_article = art.no_article INNER JOIN UTILISATEURS AS util ON ench.no_utilisateur = util.no_utilisateur WHERE art.no_article = ? ORDER BY montant_enchere DESC;";
+	private static final String SELECT_ENCHERE_BY_UTILISATEUR = "SELECT * FROM ENCHERES AS ench INNER JOIN ARTICLES_VENDUS AS art ON ench.no_article = art.no_article INNER JOIN CATEGORIES AS car ON art.no_categorie = cat.no_categorie INNER JOIN UTILISATEURS AS util ON art.no_utilisateur = util.no_utilisateur WHERE util.no_utilisateur = ? ORDER BY montant_enchere DESC;";
 //	private static final String SELECT_ENCHERE_BY_UTILISATEUR_OR_ARTICLEVENDU =	"SELECT * FROM ENCHERES AS e " +
 //																				"INNER JOIN ARTICLES_VENDUS AS a ON a.no_article = e.no_article " +
 //																				"INNER JOIN CATEGORIES AS c ON a.no_categorie = c.no_categorie " +

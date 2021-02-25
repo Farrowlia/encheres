@@ -20,6 +20,7 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_DATE_DEBUT_ENCHERE_ARTICLE_ERREUR = 20202;
 	public static final int REGLE_DATE_FIN_ENCHERE_ARTICLE_ERREUR = 20203;
 	public static final int REGLE_PRIX_INITIAL_ARTICLE_ERREUR = 20204;
+	public static final int REGLE_PRIX_VENTE_ARTICLE_ERREUR = 20205;
 
 	
 	// Code erreur concernant CATEGORIE

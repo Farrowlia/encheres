@@ -1,3 +1,7 @@
+<%@page import="org.eni.encheres.erreur.LecteurMessage"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Redecouvrez les enchËres avec une pointe d'Èthique."> <!-- Description du site -->
+    <meta name="description" content="Redecouvrez les ench√®res avec une pointe d'√©thique."> <!-- Description du site -->
     <meta name="author" content="ENIGroupeC">
-    <meta name="robots" content="index,follow"/> <!-- Autorise les moteurs de recherche ‡ indexer la page -->
+    <meta name="robots" content="index,follow"/> <!-- Autorise les moteurs de recherche √† indexer la page -->
     <link rel="canonical" href="http://www.enchereeni.fr/index.html"/> <!-- Adresse canonique du site -->
 
     <!-- OpenGraph Meta Tags - Personnalise la vignette de partage sur les sites tels que LinkedIn, Facebook, Google+,... -->
@@ -15,15 +19,15 @@
     <meta property="og:site" content="http://www.enchereeni.fr/index.html"/>
     <meta property="og:locale" content="fr_FR">
 	<meta property="og:title" content="Enchere ENI"/>
-	<meta property="og:description" content="Redecouvrez les enchËres avec une pointe d'Èthique."/>
+	<meta property="og:description" content="Redecouvrez les ench√®res avec une pointe d'√©thique."/>
 	<meta property="og:image" content="images/logo-vert.png"/>
 	<meta property="og:url" content="http://www.enchereeni.fr/index.html"/>
 	<meta property="og:type" content="website"/>
 
     <!-- Titre du site -->
-    <title>Enchere ENI - NomArticle</title>
+    <title>Enchere ENI - ${articleVendu.nomArticle}</title>
     
-    <!-- Styles importÈs -->
+    <!-- Styles import√©s -->
     <link rel="stylesheet" href="css/lineicons.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
@@ -60,7 +64,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="index.jsp">
                             <img src="images/logo-blanc.png" alt="Logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAccueil" aria-controls="navbarAccueil" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,13 +74,55 @@
                         </button>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarAccueil">
                             <ul class="navbar-nav m-auto">
-                                <li class="nav-item"><a href="index.html">Accueil</a></li>
-                                <li class="nav-item"><a href="pageRechercheArticle.jsp">Rechercher</a></li>
+                                <li class="nav-item"><a class="button-lien-perso"
+									href="NouvelleVente"><button type="button"
+											class="btn btn-outline-warning">Cr√©er une vente</button></a></li>
+								<li class="nav-item">
+									<form id="search-form" class="form" action="RechercheArticles"
+										method="post">
+										<div class="input-group">
+											<input type="text" class="form-control" name="keyword"
+												placeholder="Que recherchez-vous ?">
+											<div class="input-group-append">
+												<select class="form-control" name="categorie">
+													<option value="0" selected="true">Cat√©gories</option>
+													<c:forEach items="${listeCategorie}" var="categorie"
+														varStatus="status">
+														<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="input-group-append">
+												<input class="btn btn-outline-light" name="btnSubmit"
+													value="&#128269;" type="submit">
+											</div>
+										</div>
+									</form>
+								</li>
                             </ul>
                         </div>
                         <div class="navbar-btn">
                             <ul>
-                                <li><a class="solid" href="pageConnexionInscription.jsp">Se connecter</a></li>
+                                <li>
+                                	<c:set var="sessionUtilisateur" value="${sessionUtilisateur}"/>
+									<c:if test="${sessionUtilisateur != null}">
+										<div class="dropdown">
+											<a class="solid dropdown-toggle" href="#"
+												role="button" id="dropdownMenuLink" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">${sessionUtilisateur.prenom}
+												</a>
+
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+												<a class="dropdown-item text-dark" href="ModifierProfil">Mon profil</a>
+												<a class="dropdown-item text-dark" href="MesArticles">Mes articles</a>
+												<a class="dropdown-item text-dark" href="Deconnexion">Se d√©connecter</a>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${sessionUtilisateur == null}">
+										<a class="solid" href="Authentification">Se connecter</a>
+									</c:if>
+								</li>
                             </ul>
                         </div>
                     </nav>
@@ -98,62 +144,61 @@
 				<div class="col-lg-7 col-md-12">
 					<div class="carousel slide" data-ride="carousel" id="carousel-1">
 						<div class="carousel-inner" role="listbox">
-							<div class="carousel-item active">
-								<img class="img-thumbnail w-100 d-block"
-									src="images/article-1.jpg" alt="Slide Image" loading="lazy">
-							</div>
-							<div class="carousel-item">
-								<img class="img-thumbnail w-100 d-block"
-									src="images/article-1.jpg" alt="Slide Image">
-							</div>
-							<div class="carousel-item">
-								<img class="img-thumbnail w-100 d-block"
-									src="images/article-1.jpg" alt="Slide Image">
-							</div>
+							<c:forEach items="${listeImage}" var="image" varStatus="status">
+								<div class="carousel-item active">
+									<img class="img-thumbnail w-100 d-block"
+										src="${image.cheminUrl}" alt="Slide Image" loading="lazy">
+								</div>
+							</c:forEach>
 						</div>
 						<div>
 							<a class="carousel-control-prev" href="#carousel-1" role="button"
 								data-slide="prev"><span class="carousel-control-prev-icon"></span><span
-								class="sr-only">PrÈcÈdente</span></a><a
+								class="sr-only">Pr√©c√©dente</span></a><a
 								class="carousel-control-next" href="#carousel-1" role="button"
 								data-slide="next"><span class="carousel-control-next-icon"></span><span
 								class="sr-only">Suivante</span></a>
 						</div>
 						<ol class="carousel-indicators">
 							<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-							<li data-target="#carousel-1" data-slide-to="1"></li>
-							<li data-target="#carousel-1" data-slide-to="2"></li>
+							<c:forEach items="${listeImage}" var="image" varStatus="status">
+								<c:set var="i" value="1"/>
+								<li data-target="#carousel-1" data-slide-to="i"></li>
+								<c:set var="i" value="i+1"/>
+							</c:forEach>
 						</ol>
 					</div>
 				</div>
 				<div class="col-lg-5 col-md-12">
-					<h4>Jouet table</h4>
+					<h4>${articleVendu.nomArticle}</h4>
 					<div class="price">
-						<span class="text-success">8 $</span>
+						<span class="text-success">${articleVendu.prixVente} $</span>
 					</div>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
 						<span class="font-weight-bold">Description :</span><span
-							class="ml-2"> blablabla</span>
+							class="ml-2"> ${articleVendu.description}</span>
 					</div>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
-						<span class="font-weight-bold">CatÈgorie :</span><span
-							class="ml-2"> Jouet</span>
+						<span class="font-weight-bold">Cat√©gorie :</span><span
+							class="ml-2"> ${articleVendu.categorie.libelle}</span>
 					</div>
+					<c:if test="${enchere.utilisateur.pseudo != null}">
 					<div class="d-flex align-items-center mt-4 offers mb-1">
-						<span class="font-weight-bold">EnchËre actuelle :</span><span
-							class="ml-2"> par Diego356</span>
+						<span class="font-weight-bold">Derni√®re ench√®re :</span><span
+							class="ml-2"> par ${enchere.utilisateur.pseudo}</span>
 					</div>
+					</c:if>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
-						<span class="font-weight-bold">Mise ‡ prix :</span><span
-							class="ml-2"> 2 $</span>
+						<span class="font-weight-bold">Mise √† prix :</span><span
+							class="ml-2"> ${articleVendu.prixInitial} $</span>
 					</div>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
 						<span class="font-weight-bold">Retrait :</span><span class="ml-2">
-							18 rue de Paris 75000 PARIS</span>
+							${retrait.rue} ${retrait.codePostal} ${retrait.ville}</span>
 					</div>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
-						<span class="font-weight-bold">Termine dans :</span><span
-							class="ml-2 badge-temp-restant bg-danger">17 min<br></span>
+						<span class="font-weight-bold">Termine dans : &nbsp;</span>
+						<button type="button" class="btn btn-outline-danger" id="temp-restant-fin-encheres"></button>
 					</div>
 					<hr>
 
@@ -161,17 +206,19 @@
 					<div>
 						<span class="font-weight-bold">Vendeur :</span>
 								<button type="button" class="btn btn-light"
-									data-toggle="modal" data-target="#lienModal">Joja44</button>
+									data-toggle="modal" data-target="#lienModal">${articleVendu.utilisateur.pseudo}</button>
 					</div>
 					<div class="modal fade" id="lienModal" role="dialog">
 						<div class="modal-dialog">
 							<div class="card">
 								<div class="card-body text-center">
-									<h4>Joja44</h4>
+									<h4>${articleVendu.utilisateur.prenom} ${articleVendu.utilisateur.nom}</h4>
 									<hr>
-									<p>informations</p>
-									<p>informations</p>
-									<p>informations</p>
+									<p>${articleVendu.utilisateur.email}</p>
+									<p>${articleVendu.utilisateur.telephone}</p>
+									<p>${articleVendu.utilisateur.rue}</p>
+									<p>${articleVendu.utilisateur.codePostal}</p>
+									<p>${articleVendu.utilisateur.ville}</p>
 								</div>
 							</div>
 						</div>
@@ -181,10 +228,15 @@
 					
 					
 					<div class="mt-3">
-						<form id="search-form" class="form" action="ServletRechercheArticle" method="post">
-						<input type="number" value="9" min="0" max="1000" step="10"/>
-						<input name="btnSubmit" class="btn btn-success" value="EnchÈrir" type="submit">
+						<c:if test="${sessionUtilisateur.noUtilisateur != articleVendu.utilisateur.noUtilisateur}">
+						<form id="search-form" class="form" action="NouvelleEnchere" method="post">
+						<input name="montantEnchere" type="number" value="${articleVendu.prixVente}" min="0" max="1000" step="10"/>
+						<input name="btnSubmit" class="btn btn-success" value="Ench√©rir" type="submit">
 						</form>
+						</c:if>
+						<c:if test="${sessionUtilisateur.noUtilisateur == articleVendu.utilisateur.noUtilisateur}">
+							<a class="solid" href="ModifierArticle">Modifier l'article</a>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -198,7 +250,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="footer-logo text-center">
-                        <a class="mt-30" href="index.html"><img src="images/logo-blanc.png" alt="Logo"></a>
+                        <a class="mt-30" href="index.jsp"><img src="images/logo-blanc.png" alt="Logo"></a>
                     </div>
                     <ul class="social text-center mt-60">
                         <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>
@@ -215,8 +267,35 @@
         </div>
     </section>
     
-
-    <!-- Javascript importÈs -->
+	<script>
+	function dateDiff(date1, date2) {
+	    var diff = {}                           // Initialisation du retour
+	    var tmp = date2 - date1;
+	 
+	    tmp = Math.floor(tmp/1000);             // Nombre de secondes entre les 2 dates
+	    diff.sec = tmp % 60;                    // Extraction du nombre de secondes
+	 
+	    tmp = Math.floor((tmp-diff.sec)/60);    // Nombre de minutes (partie enti√®re)
+	    diff.min = tmp % 60;                    // Extraction du nombre de minutes
+	 
+	    tmp = Math.floor((tmp-diff.min)/60);    // Nombre d'heures (enti√®res)
+	    diff.hour = tmp % 24;                   // Extraction du nombre d'heures
+	     
+	    tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
+	    diff.day = tmp;
+	     
+	    return diff;
+	}
+	
+	   function horloge() {
+		   var boite = document.getElementById("temp-restant-fin-encheres");
+		   var heure = new Date();
+		   diff = dateDiff(new Date(), new Date('${articleVendu.dateFinEncheres}'));
+		   boite.textContent = diff.day + " jour(s) " + diff.hour + "h" + diff.min + "min" + diff.sec + "s";
+	   }
+	   setInterval("horloge()", 1000);
+	</script>
+    <!-- Javascript import√©s -->
     <!--====== Jquery js ======-->
     <script src="js/vendor/jquery-1.12.4.min.js"></script>
     <script src="js/vendor/modernizr-3.7.1.min.js"></script>

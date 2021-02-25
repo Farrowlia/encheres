@@ -1,3 +1,7 @@
+<%@page import="org.eni.encheres.erreur.LecteurMessage"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,6 +37,13 @@
 </head>
 
 <body>
+
+	<!-- Pop-up erreur -->
+	<div class="containerPerso">
+	<c:forEach items="${listeCodesErreur}" var="codeErreur" varStatus="status">
+		<div class="toastPerso">${LecteurMessage.getMessageErreur(codeErreur)} </div>
+	</c:forEach>
+	</div>
    
     <!--====== PRELOADER ======-->
 
@@ -60,7 +71,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="index.jsp">
                             <img src="images/logo-blanc.png" alt="Logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAccueil" aria-controls="navbarAccueil" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +89,26 @@
                         </div>
                         <div class="navbar-btn">
                             <ul>
-                                <li><a class="solid" href="${pageContext.request.contextPath}/ServletAuthentification">Se connecter</a></li>
+                                <li>
+                                	<c:set var="sessionUtilisateur" value="${sessionUtilisateur}"/>
+									<c:if test="${sessionUtilisateur != null}">
+										<div class="dropdown">
+											<a class="solid dropdown-toggle" href="#"
+												role="button" id="dropdownMenuLink" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">${sessionUtilisateur.prenom}
+												</a>
+
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+												<a class="dropdown-item text-dark" href="ModifierProfil">Mon profil</a>
+												<a class="dropdown-item text-dark" href="MesArticles">Mes articles</a>
+												<a class="dropdown-item text-dark" href="Deconnexion">Se déconnecter</a>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${sessionUtilisateur == null}">
+										<a class="solid" href="Authentification">Se connecter</a>
+									</c:if>
+								</li>
                             </ul>
                         </div>
                     </nav>
@@ -103,7 +133,7 @@
                                         <div class="col-lg-12">
                                             <div class="panel-body">
                                                 <div class="text-center">
-                                                    <form id="search-form" class="form" action="Servlet" method="post">
+                                                    <form id="search-form" class="form" action="RechercheArticles" method="post">
                                                         <div class="form-group">
                                                         	<input class="form-control" name="keyword" placeholder="Que recherchez-vous ?" type="text">
                                                         </div>
@@ -111,9 +141,10 @@
                                                             <div class="input-group">
                                                                 <select class="form-control" name="categorie" >
                                                                     <option value="0" selected="true">Catégories</option>
-                                                                    <option value="1">Meuble</option>
-                                                                    <option value="2">Electroménager</option>
-                                                                    <option value="3">Vetements</option>
+																	<c:forEach items="${listeCategorie}" var="categorie"
+																		varStatus="status">
+																		<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+																	</c:forEach>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -299,7 +330,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="footer-logo text-center">
-                        <a class="mt-30" href="index.html"><img src="images/logo-blanc.png" alt="Logo"></a>
+                        <a class="mt-30" href="index.jsp"><img src="images/logo-blanc.png" alt="Logo"></a>
                     </div>
                     <ul class="social text-center mt-60">
                         <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>

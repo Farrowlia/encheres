@@ -8,13 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.ArticleVenduManager;
 import org.eni.encheres.bll.FormulaireNouvelleVente;
 import org.eni.encheres.bll.ImageManager;
 import org.eni.encheres.bll.RetraitManager;
 import org.eni.encheres.bo.ArticleVendu;
-import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Image;
 import org.eni.encheres.bo.Retrait;
 import org.eni.encheres.erreur.BusinessException;
@@ -22,7 +22,7 @@ import org.eni.encheres.erreur.BusinessException;
 /**
  * Servlet implementation class NouvelleVente
  */
-@WebServlet(urlPatterns = {"/NouvelleVente"})
+@WebServlet("/NouvelleVente")
 public class ServletNouvelleVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -30,19 +30,24 @@ public class ServletNouvelleVente extends HttpServlet {
 	public static final String ATT_RETRAIT			= "retrait";
 	public static final String ATT_CATEGORIE		= "categorie";
 	public static final String ATT_IMAGE			= "image";
-	public static final String VUE_NOUVELLE_VENTE 	= "/WEB-INF/nouvelleVente.jsp";
+	public static final String VUE_NOUVELLE_VENTE 	= "pageCreationArticle.jsp";
     
    
 	//affichage du formulaire
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-    	response.setContentType("text/html");
-		this.getServletContext().getRequestDispatcher(VUE_NOUVELLE_VENTE).forward(request, response);
+    	// réinjection de la liste de catégories. Surement facultatif
+    	HttpSession session = request.getSession();
+    	session.setAttribute("listeCategorie", session.getAttribute("listeCategorie"));
+    	
+    	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageCreationArticle.jsp");
+		rd.forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
 
 		try {
 		FormulaireNouvelleVente formulaire = new FormulaireNouvelleVente();
@@ -74,7 +79,7 @@ public class ServletNouvelleVente extends HttpServlet {
             request.setAttribute("listeCodesErreur", ex.getListeCodesErreur());
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageRechercheArticle.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageMesArticles.jsp");
         rd.forward(request, response);
     }
 }

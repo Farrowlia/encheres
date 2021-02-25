@@ -34,7 +34,6 @@ private ArticleVenduDAO articleVenduDAO;
 	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException {
 		BusinessException exception = new BusinessException();
 		valider(articleVendu, exception);
-		
 		if (exception.hasErreurs()) {
 			throw exception;
 		}
@@ -61,6 +60,10 @@ private ArticleVenduDAO articleVenduDAO;
 		return articleVenduDAO.selectArticleVendu(categorie, keyword);
 	}
 	
+	public ArticleVendu selectArticleVenduById(int noArticle) throws BusinessException {
+		return articleVenduDAO.selectArticleVenduById(noArticle);
+	}
+	
 	private void valider(ArticleVendu articleVendu, BusinessException exeption) {
 		articleVendu.setNomArticle(articleVendu.getNomArticle().trim());
 		if (articleVendu.getNomArticle() == null || articleVendu.getNomArticle().equals("") || articleVendu.getNomArticle().length() > 30) {
@@ -82,6 +85,10 @@ private ArticleVenduDAO articleVenduDAO;
 		
 		if (articleVendu.getPrixInitial() < 0) {
 			exeption.ajouterErreur(CodesResultatBLL.REGLE_PRIX_INITIAL_ARTICLE_ERREUR);
+		}
+		
+		if (articleVendu.getPrixVente() < 0) {
+			exeption.ajouterErreur(CodesResultatBLL.REGLE_PRIX_VENTE_ARTICLE_ERREUR);
 		}
 	}
 
