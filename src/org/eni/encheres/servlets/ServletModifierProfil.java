@@ -37,7 +37,7 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Supprimer le compte
-		if(request.getParameter("action").equals("delete")) {
+		if (request.getParameter("action").equals("delete")) {
 		Authentification authentification = new Authentification();
 			if (authentification.authorize(request)) {
 				UtilisateurManager um = new UtilisateurManager();
@@ -61,7 +61,6 @@ public class ServletModifierProfil extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			
 			if (request.getParameter("motDePasse").equals(request.getParameter("confirmationMotDePasse"))) {
-				try {
 					utilisateur.setPseudo(request.getParameter("pseudo"));
 					utilisateur.setNom(request.getParameter("nom"));
 					utilisateur.setPrenom(request.getParameter("prenom"));
@@ -71,11 +70,12 @@ public class ServletModifierProfil extends HttpServlet {
 					utilisateur.setCodePostal(request.getParameter("codePostal"));
 					utilisateur.setVille(request.getParameter("ville"));
 					utilisateur.setMotDePasse(request.getParameter("motDePasse"));
-					utilisateurManager.saveNewOrExistingCompte(utilisateur);
-					
-				} catch (BusinessException | SQLException e) {
-					request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				}
+					try {
+						utilisateurManager.saveNewOrExistingCompte(utilisateur);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				
 				session.setAttribute("sessionUtilisateur", utilisateur);
 				

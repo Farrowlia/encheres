@@ -142,48 +142,89 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-8">
-							<div class="container">
-								<div class="row justify-content-center">
-									<div class="col-lg-8 register-form">
-										<form id="connection-form" class="form" action="ModifierProfil?action=update" method="post">
-											<div class="form-group">
-												<input name="pseudo" placeholder="Pseudo" value="${sessionUtilisateur.pseudo}" class="form-control" type="text" maxlength="30" required>
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-8 register-form">
+								<form id="connection-form" class="form"
+									action="ModifierProfil?action=update" method="post">
+									<div class="form-group">
+										<input name="pseudo" placeholder="Pseudo"
+											value="${sessionUtilisateur.pseudo}" class="form-control"
+											type="text" maxlength="30" required>
+									</div>
+									<div class="form-group">
+										<input name="nom" placeholder="Nom"
+											value="${sessionUtilisateur.nom}" class="form-control"
+											type="text" maxlength="30" required>
+									</div>
+									<div class="form-group">
+										<input name="prenom" placeholder="Prenom"
+											value="${sessionUtilisateur.prenom}" class="form-control"
+											type="text" maxlength="30" required>
+									</div>
+									<div class="form-group">
+										<input name="email" placeholder="Email"
+											value="${sessionUtilisateur.email}" class="form-control"
+											type="email" maxlength="50" required>
+									</div>
+									<div class="form-group">
+										<input name="telephone" placeholder="Telephone"
+											value="${sessionUtilisateur.telephone}" class="form-control"
+											type="tel" maxlength="15" required>
+									</div>
+									<div class="form-group">
+										<input name="rue" placeholder="Rue"
+											value="${sessionUtilisateur.rue}" class="form-control"
+											type="text" maxlength="50" required>
+									</div>
+									<div class="form-group">
+										<input name="codePostal" placeholder="Code postal"
+											value="${sessionUtilisateur.codePostal}" class="form-control"
+											type="text" maxlength="10" required>
+									</div>
+									<div class="form-group">
+										<input name="ville" placeholder="Ville"
+											value="${sessionUtilisateur.ville}" class="form-control"
+											type="text" maxlength="30" required>
+									</div>
+									<div class="form-group">
+										<input name="motDePasse" placeholder="Mot de passe"
+											class="form-control" type="password" maxlength="30" required>
+									</div>
+									<div class="form-group">
+										<input name="confirmationMotDePasse"
+											placeholder="Confirmer Mot de Passe" class="form-control"
+											type="password" maxlength="30" required>
+									</div>
+									<div class="form-group">
+										<input name="btnSubmit"
+											class="btn btn-lg btn-primary btn-block" value="Enregistrer"
+											type="submit">
+									</div>
+								</form>
+								<div>
+									<button type="button" class="btn btn-light" data-toggle="modal"
+										data-target="#lienModal">Supprimer le compte</button>
+								</div>
+								<div class="modal fade" id="lienModal" role="dialog">
+									<div class="modal-dialog">
+										<div class="card">
+											<div class="card-body text-center">
+												<h4>Confirmation suppression</h4>
+												<hr>
+												<form action="ModifierProfil?action=delete" class="form" method="post">
+													<input value="delete" type="hidden">
+													<input name="btnSubmit"
+														class="btn btn-lg btn-primary btn-block"
+														value="Enregistrer" type="submit">
+												</form>
 											</div>
-											<div class="form-group">
-												<input name="nom" placeholder="Nom" value="${sessionUtilisateur.nom}" class="form-control" type="text" maxlength="30" required>
-											</div>
-											<div class="form-group">
-												<input name="prenom" placeholder="Prenom" value="${sessionUtilisateur.prenom}" class="form-control" type="text" maxlength="30" required>
-											</div>
-											<div class="form-group">
-												<input name="email" placeholder="Email" value="${sessionUtilisateur.email}" class="form-control" type="email" maxlength="50" required>
-											</div>
-											<div class="form-group">
-												<input name="telephone" placeholder="Telephone" value="${sessionUtilisateur.telephone}" class="form-control" type="tel" maxlength="15" required>
-											</div>
-											<div class="form-group">
-												<input name="rue" placeholder="Rue" value="${sessionUtilisateur.rue}" class="form-control" type="text" maxlength="50" required>
-											</div>
-											<div class="form-group">
-												<input name="codePostal" placeholder="Code postal" value="${sessionUtilisateur.codePostal}" class="form-control" type="text" maxlength="10" required>
-											</div>
-											<div class="form-group">
-												<input name="ville" placeholder="Ville" value="${sessionUtilisateur.ville}" class="form-control" type="text" maxlength="30" required>
-											</div>
-											<div class="form-group">
-												<input name="motDePasse" placeholder="Mot de passe" class="form-control" type="password" maxlength="30" required>
-											</div>
-											<div class="form-group">
-												<input name="confirmationMotDePasse" placeholder="Confirmer Mot de Passe" class="form-control" type="password" maxlength="30" required>
-											</div>
-											<div class="form-group">
-												<input name="btnSubmit" class="btn btn-lg btn-primary btn-block" value="Enregistrer" type="submit">
-											</div>
-										</form>
-										<a class="solid" href="ModifierProfil?action=update">Supprimer le compte</a>
+										</div>
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -25,7 +25,7 @@
 	<meta property="og:type" content="website"/>
 
     <!-- Titre du site -->
-    <title>Enchere ENI - Créer vente</title>
+    <title>Enchere ENI - ${articleVendu.nomArticle}</title>
     
     <!-- Styles importés -->
     <link rel="stylesheet" href="css/lineicons.css">
@@ -74,8 +74,31 @@
                         </button>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarAccueil">
                             <ul class="navbar-nav m-auto">
-                                <li class="nav-item"><a href="index.jsp">Accueil</a></li>
-                                <li class="nav-item"><a href="#">Rechercher</a></li>
+                                <li class="nav-item"><a class="button-lien-perso"
+									href="NouvelleVente"><button type="button"
+											class="btn btn-outline-warning">Créer une vente</button></a></li>
+								<li class="nav-item">
+									<form id="search-form" class="form" action="RechercheArticles"
+										method="post">
+										<div class="input-group">
+											<input type="text" class="form-control" name="keyword"
+												placeholder="Que recherchez-vous ?">
+											<div class="input-group-append">
+												<select class="form-control" name="categorie">
+													<option value="0" selected="true">Catégories</option>
+													<c:forEach items="${listeCategorie}" var="categorie"
+														varStatus="status">
+														<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="input-group-append">
+												<input class="btn btn-outline-light" name="btnSubmit"
+													value="&#128269;" type="submit">
+											</div>
+										</div>
+									</form>
+								</li>
                             </ul>
                         </div>
                         <div class="navbar-btn">
@@ -172,8 +195,8 @@
 							${retrait.rue} ${retrait.codePostal} ${retrait.ville}</span>
 					</div>
 					<div class="d-flex align-items-center mt-4 offers mb-1">
-						<span class="font-weight-bold">Termine dans :</span><span
-							class="ml-2 badge-temp-restant bg-danger" id="temp-restant-fin-encheres"><br></span>
+						<span class="font-weight-bold">Termine dans : &nbsp;</span>
+						<button type="button" class="btn btn-outline-danger" id="temp-restant-fin-encheres"></button>
 					</div>
 					<hr>
 
