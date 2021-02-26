@@ -16,12 +16,7 @@ import org.eni.encheres.authentification.InscriptionException;
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dto.ModifProfilDTO;
-import org.eni.encheres.erreur.BusinessException;
 import org.eni.encheres.utils.MapUtils;
-
-import com.microsoft.sqlserver.jdbc.StringUtils;
-
-import static org.eni.encheres.utils.MapUtils.getValeurChamp;
 
 /**
  * Servlet implementation class ServletModifierProfil
@@ -52,19 +47,6 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Supprimer le compte
-		if (request.getParameter("action") == "delete") {
-			try {
-				um.deleteCompte(authentification.getUtilisateurFromSession(request));
-				// supprime le compte et les ventes en cours et encheres associées
-				this.getServletContext().getRequestDispatcher("/Deconnexion").forward(request, response);
-				// déconnecte l'utilisateur et le redirige vers la page d'accueil
-
-			} catch (BusinessException | SQLException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 
 		// mise à jour du compte (UPDATE)
 		request.setCharacterEncoding("UTF-8");

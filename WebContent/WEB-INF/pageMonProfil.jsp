@@ -206,26 +206,37 @@
 											type="submit">
 									</div>
 								</form>
+
 								<div>
 									<button type="button" class="btn btn-light" data-toggle="modal"
-										data-target="#lienModal">Supprimer le compte</button>
+										data-target="#SupressionModal">Supprimer le compte</button>
 								</div>
-								<div class="modal fade" id="lienModal" role="dialog">
-									<div class="modal-dialog">
-										<div class="card">
-											<div class="card-body text-center">
-												<h4>Confirmer la suppression du compte ?</h4>
-												<hr>
-												<form action="ModifierProfil" class="form" method="post">
-													<input value="delete" type="hidden">
-													<input name="btnSubmit"
-														class="btn btn-lg btn-primary btn-block"
-														value="Supprimer" type="submit">
-												</form>
+								<div class="modal fade" id="SupressionModal" tabindex="-1"
+									role="dialog" aria-labelledby="SupressionModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="SupressionModalLabel">Attention
+													!</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">Cette action est définitive</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Annuler</button>
+												<a class="button-lien-perso" href="SupprimerProfil">
+													<button type="button" class="btn btn-outline-dark">
+														Confirmer la suppression du compte ?</button>
+												</a>
 											</div>
 										</div>
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>

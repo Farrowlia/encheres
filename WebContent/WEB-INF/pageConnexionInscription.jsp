@@ -163,7 +163,7 @@
 											action="${pageContext.request.contextPath}/Authentification"
 											method="post">
 											<div class="form-group">
-												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text" required> 
+												<input name="login" placeholder="Pseudo/Email" class="form-control" type="text" value="${cookieLogin}" required> 
 												<span class="erreur">${form.erreurs['login']}</span>
 											</div>
 											<div class="form-group">
